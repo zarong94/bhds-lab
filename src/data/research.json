@@ -1,0 +1,52 @@
+[
+  {
+    "id": "medical-ai",
+    "title": { "en": "Medical AI & Clinical Decision Support", "ko": "의료 AI 및 임상 의사결정 지원" },
+    "description": {
+      "en": "Developing machine learning and deep learning models for clinical prediction, diagnosis support, and treatment recommendation using electronic health records and medical imaging data.",
+      "ko": "전자건강기록 및 의료 영상 데이터를 활용하여 임상 예측, 진단 지원, 치료 추천을 위한 머신러닝 및 딥러닝 모델을 개발합니다."
+    },
+    "icon": "brain",
+    "keywords": ["Deep Learning", "EHR", "Clinical Prediction", "Diagnosis"]
+  },
+  {
+    "id": "health-data-analytics",
+    "title": { "en": "Health Data Analytics", "ko": "건강 데이터 분석" },
+    "description": {
+      "en": "Analyzing large-scale health data including national health insurance claims, cohort studies, and wearable device data to uncover patterns and inform public health strategies.",
+      "ko": "국민건강보험 청구 데이터, 코호트 연구, 웨어러블 기기 데이터 등 대규모 건강 데이터를 분석하여 패턴을 발견하고 공중보건 전략을 수립합니다."
+    },
+    "icon": "chart",
+    "keywords": ["Big Data", "Claims Data", "Epidemiology", "Wearables"]
+  },
+  {
+    "id": "clinical-nlp",
+    "title": { "en": "Clinical Natural Language Processing", "ko": "임상 자연어처리" },
+    "description": {
+      "en": "Extracting structured information from unstructured clinical notes, pathology reports, and medical literature using NLP and large language models.",
+      "ko": "자연어처리 및 대규모 언어 모델을 활용하여 비정형 임상 노트, 병리 보고서, 의학 문헌에서 구조화된 정보를 추출합니다."
+    },
+    "icon": "text",
+    "keywords": ["NLP", "LLM", "Text Mining", "Clinical Notes"]
+  },
+  {
+    "id": "digital-health",
+    "title": { "en": "Digital Health & Precision Medicine", "ko": "디지털 헬스 및 정밀 의학" },
+    "description": {
+      "en": "Designing digital health interventions and precision medicine frameworks that integrate multi-omics, lifestyle, and environmental data for personalized health management.",
+      "ko": "다중 오믹스, 생활습관, 환경 데이터를 통합한 맞춤형 건강관리를 위한 디지털 헬스 중재 및 정밀 의학 프레임워크를 설계합니다."
+    },
+    "icon": "heart",
+    "keywords": ["Precision Medicine", "Genomics", "mHealth", "Personalized"]
+  },
+  {
+    "id": "causal-inference",
+    "title": { "en": "Causal Inference in Healthcare", "ko": "의료 인과 추론" },
+    "description": {
+      "en": "Applying causal inference methods to observational health data to evaluate treatment effects, identify risk factors, and support evidence-based medicine.",
+      "ko": "관찰 건강 데이터에 인과 추론 방법을 적용하여 치료 효과를 평가하고, 위험 요인을 식별하며, 근거 중심 의학을 지원합니다."
+    },
+    "icon": "link",
+    "keywords": ["Causal Inference", "RWE", "Treatment Effects", "Biostatistics"]
+  }
+]

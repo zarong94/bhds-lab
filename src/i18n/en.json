@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "research": "Research",
+    "publications": "Publications",
+    "members": "Members",
+    "contact": "Contact"
+  },
+  "hero": {
+    "labName": "Bio-Health Data Science Lab",
+    "university": "Yonsei University",
+    "department": "Graduate School of Convergence Health and Medicine",
+    "slogan": "Advancing Health Through Data-Driven Discovery",
+    "cta": "Explore Our Research",
+    "ctaSecondary": "Meet the Team"
+  },
+  "home": {
+    "researchHighlights": "Research Highlights",
+    "newsTitle": "Lab News & Awards",
+    "newsSubtitle": "Stay updated with our latest achievements and announcements",
+    "viewAll": "View All",
+    "statsTitle": "Lab at a Glance",
+    "publications": "Publications",
+    "projects": "Research Projects",
+    "membersCount": "Lab Members",
+    "collaborations": "Collaborations"
+  },
+  "about": {
+    "title": "About",
+    "professorTitle": "Professor & Lab Director",
+    "bio": "Dr. Sohee Park is an Associate Professor at the Graduate School of Convergence Health and Medicine, Yonsei University. Her research focuses on leveraging advanced data science and artificial intelligence methodologies to address critical challenges in biomedical and public health domains. She has published extensively in top-tier journals and conferences, and her work has been recognized with multiple awards.",
+    "education": "Education",
+    "experience": "Professional Experience",
+    "awards": "Awards & Honors",
+    "interests": "Research Interests",
+    "educationList": [
+      { "year": "2012", "detail": "Ph.D. in Biostatistics, Seoul National University" },
+      { "year": "2008", "detail": "M.S. in Statistics, Seoul National University" },
+      { "year": "2006", "detail": "B.S. in Statistics, Yonsei University" }
+    ],
+    "experienceList": [
+      { "year": "2020 – Present", "detail": "Associate Professor, Graduate School of Convergence Health and Medicine, Yonsei University" },
+      { "year": "2016 – 2020", "detail": "Assistant Professor, Graduate School of Convergence Health and Medicine, Yonsei University" },
+      { "year": "2013 – 2016", "detail": "Postdoctoral Researcher, Harvard T.H. Chan School of Public Health" }
+    ],
+    "awardsList": [
+      "Best Paper Award, Korean Society of Medical Informatics (2024)",
+      "Young Investigator Award, AMIA Annual Symposium (2022)",
+      "Research Excellence Award, Yonsei University (2021)",
+      "NRF Young Researcher Grant (2019)"
+    ],
+    "interestTags": [
+      "Health Data Analytics",
+      "Medical AI",
+      "Electronic Health Records",
+      "Clinical NLP",
+      "Survival Analysis",
+      "Digital Health",
+      "Causal Inference",
+      "Precision Medicine"
+    ]
+  },
+  "research": {
+    "title": "Research Areas",
+    "subtitle": "Our lab explores the intersection of data science and healthcare to develop innovative solutions for real-world health challenges."
+  },
+  "publications": {
+    "title": "Publications",
+    "subtitle": "Selected publications from our lab. For a complete list, visit Google Scholar.",
+    "searchPlaceholder": "Search by title, author, or keyword...",
+    "allYears": "All Years",
+    "allTypes": "All Types",
+    "journal": "Journal",
+    "conference": "Conference",
+    "copyBibtex": "BibTeX",
+    "copied": "Copied!",
+    "noResults": "No publications match your search criteria."
+  },
+  "members": {
+    "title": "Lab Members",
+    "subtitle": "Meet our talented team of researchers and students.",
+    "categories": {
+      "professor": "Faculty",
+      "phd": "Ph.D. Students",
+      "ms": "M.S. Students",
+      "undergraduate": "Undergraduate Researchers",
+      "alumni": "Alumni"
+    },
+    "showAlumni": "Show Alumni",
+    "hideAlumni": "Hide Alumni",
+    "currentPosition": "Current Position"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We welcome inquiries from prospective students and collaborators.",
+    "address": "Address",
+    "addressDetail": "Graduate School of Convergence Health and Medicine, Yonsei University, 50 Yonsei-ro, Seodaemun-gu, Seoul 03722, Republic of Korea",
+    "email": "Email",
+    "phone": "Phone",
+    "officeHours": "Office Hours",
+    "officeHoursDetail": "Mon – Fri, 10:00 AM – 5:00 PM (By appointment)",
+    "prospective": "Prospective Students",
+    "prospectiveText": "We are always looking for motivated students interested in bio-health data science. If you are passionate about using data and AI to improve health outcomes, please reach out with your CV and a brief statement of research interests.",
+    "applyButton": "Send Inquiry",
+    "locationTitle": "Location"
+  },
+  "footer": {
+    "labName": "Bio-Health Data Science Lab",
+    "university": "Yonsei University",
+    "department": "Graduate School of Convergence Health and Medicine",
+    "copyright": "© 2026 BHDS Lab, Yonsei University. All rights reserved.",
+    "quickLinks": "Quick Links",
+    "connect": "Connect"
+  },
+  "news": {
+    "categories": {
+      "award": "Award",
+      "publication": "Publication",
+      "event": "Event",
+      "announcement": "Announcement"
+    }
+  }
+}

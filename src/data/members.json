@@ -1,0 +1,83 @@
+{
+  "professor": [
+    {
+      "name": { "en": "Sohee Park", "ko": "박소희" },
+      "role": { "en": "Associate Professor & Lab Director", "ko": "부교수 · 연구실장" },
+      "email": "sohee.park@yonsei.ac.kr",
+      "image": null,
+      "interests": { "en": ["Health Data Analytics", "Medical AI", "Causal Inference"], "ko": ["건강 데이터 분석", "의료 AI", "인과 추론"] },
+      "links": {
+        "scholar": "https://scholar.google.com",
+        "website": null
+      }
+    }
+  ],
+  "phd": [
+    {
+      "name": { "en": "Hyunwoo Lee", "ko": "이현우" },
+      "role": { "en": "Ph.D. Candidate (2021 –)", "ko": "박사과정 (2021 –)" },
+      "email": "hw.lee@yonsei.ac.kr",
+      "image": null,
+      "interests": { "en": ["Clinical NLP", "EHR Analysis"], "ko": ["임상 자연어처리", "전자건강기록 분석"] },
+      "links": { "scholar": null, "website": null }
+    },
+    {
+      "name": { "en": "Minseo Choi", "ko": "최민서" },
+      "role": { "en": "Ph.D. Student (2022 –)", "ko": "박사과정 (2022 –)" },
+      "email": "ms.choi@yonsei.ac.kr",
+      "image": null,
+      "interests": { "en": ["Digital Health", "Causal Inference"], "ko": ["디지털 헬스", "인과 추론"] },
+      "links": { "scholar": null, "website": null }
+    }
+  ],
+  "ms": [
+    {
+      "name": { "en": "Jiyoung Kim", "ko": "김지영" },
+      "role": { "en": "M.S. Student (2023 –)", "ko": "석사과정 (2023 –)" },
+      "email": "jy.kim@yonsei.ac.kr",
+      "image": null,
+      "interests": { "en": ["Survival Analysis", "Cancer Genomics"], "ko": ["생존 분석", "암 유전체학"] },
+      "links": { "scholar": null, "website": null }
+    },
+    {
+      "name": { "en": "Yejin Yoon", "ko": "윤예진" },
+      "role": { "en": "M.S. Student (2023 –)", "ko": "석사과정 (2023 –)" },
+      "email": "yj.yoon@yonsei.ac.kr",
+      "image": null,
+      "interests": { "en": ["Federated Learning", "Privacy-Preserving ML"], "ko": ["연합 학습", "프라이버시 보호 ML"] },
+      "links": { "scholar": null, "website": null }
+    },
+    {
+      "name": { "en": "Sunghyun Cho", "ko": "조성현" },
+      "role": { "en": "M.S. Student (2024 –)", "ko": "석사과정 (2024 –)" },
+      "email": "sh.cho@yonsei.ac.kr",
+      "image": null,
+      "interests": { "en": ["Medical Image Analysis", "Deep Learning"], "ko": ["의료 영상 분석", "딥러닝"] },
+      "links": { "scholar": null, "website": null }
+    }
+  ],
+  "undergraduate": [
+    {
+      "name": { "en": "Eunji Kang", "ko": "강은지" },
+      "role": { "en": "Undergraduate Researcher (2025 –)", "ko": "학부 연구생 (2025 –)" },
+      "email": "ej.kang@yonsei.ac.kr",
+      "image": null,
+      "interests": { "en": ["Data Visualization", "Public Health"], "ko": ["데이터 시각화", "공중보건"] },
+      "links": { "scholar": null, "website": null }
+    }
+  ],
+  "alumni": [
+    {
+      "name": { "en": "Donghyun Seo", "ko": "서동현" },
+      "role": { "en": "M.S. (2021 – 2023)", "ko": "석사 (2021 – 2023)" },
+      "currentPosition": { "en": "Data Scientist, Samsung Medical Center", "ko": "삼성서울병원 데이터 사이언티스트" },
+      "image": null
+    },
+    {
+      "name": { "en": "Soojin Han", "ko": "한수진" },
+      "role": { "en": "M.S. (2020 – 2022)", "ko": "석사 (2020 – 2022)" },
+      "currentPosition": { "en": "ML Engineer, NAVER Healthcare", "ko": "네이버 헬스케어 ML 엔지니어" },
+      "image": null
+    }
+  ]
+}

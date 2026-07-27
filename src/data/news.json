@@ -1,0 +1,106 @@
+[
+  {
+    "id": 1,
+    "category": "award",
+    "date": "2025-06-15",
+    "title": {
+      "en": "🏆 Hyunwoo Lee wins Best Paper Award at KOSMI 2025",
+      "ko": "🏆 이현우, 대한의료정보학회 2025 최우수논문상 수상"
+    },
+    "description": {
+      "en": "Ph.D. candidate Hyunwoo Lee received the Best Paper Award at the Korean Society of Medical Informatics (KOSMI) 2025 Annual Conference for his work on clinical NLP.",
+      "ko": "박사과정 이현우 학생이 대한의료정보학회 2025 춘계학술대회에서 임상 자연어처리 연구로 최우수논문상을 수상했습니다."
+    }
+  },
+  {
+    "id": 2,
+    "category": "publication",
+    "date": "2025-05-20",
+    "title": {
+      "en": "📄 New paper accepted at Journal of Biomedical Informatics",
+      "ko": "📄 Journal of Biomedical Informatics 논문 게재 확정"
+    },
+    "description": {
+      "en": "Our paper on deep learning-based cardiovascular risk prediction has been accepted at JBI. Congratulations to all co-authors!",
+      "ko": "딥러닝 기반 심혈관 위험 예측 연구 논문이 JBI에 게재 확정되었습니다. 공동 저자 모두 축하합니다!"
+    }
+  },
+  {
+    "id": 3,
+    "category": "award",
+    "date": "2025-03-10",
+    "title": {
+      "en": "🏆 Minseo Choi awarded NRF Graduate Scholarship",
+      "ko": "🏆 최민서, 한국연구재단 대학원생 장학금 선정"
+    },
+    "description": {
+      "en": "Ph.D. student Minseo Choi has been selected for the National Research Foundation of Korea's Graduate Scholarship for her research on causal inference in digital health.",
+      "ko": "박사과정 최민서 학생이 디지털 헬스 인과 추론 연구로 한국연구재단 대학원생 장학금에 선정되었습니다."
+    }
+  },
+  {
+    "id": 4,
+    "category": "event",
+    "date": "2025-02-28",
+    "title": {
+      "en": "🎉 BHDS Lab welcomes new M.S. student Sunghyun Cho",
+      "ko": "🎉 BHDS Lab 신입생 조성현 석사과정 합류"
+    },
+    "description": {
+      "en": "We are excited to welcome Sunghyun Cho, who will be working on medical image analysis and deep learning.",
+      "ko": "의료 영상 분석 및 딥러닝을 연구할 조성현 학생의 합류를 환영합니다."
+    }
+  },
+  {
+    "id": 5,
+    "category": "announcement",
+    "date": "2025-01-15",
+    "title": {
+      "en": "📢 Call for prospective graduate students — Fall 2025",
+      "ko": "📢 2025년 후기 대학원생 모집 안내"
+    },
+    "description": {
+      "en": "BHDS Lab is recruiting motivated M.S. and Ph.D. students for Fall 2025. Please see the Contact page for more details.",
+      "ko": "BHDS Lab에서 2025년 후기 석·박사 과정 학생을 모집합니다. 자세한 사항은 연락처 페이지를 참고해 주세요."
+    }
+  },
+  {
+    "id": 6,
+    "category": "award",
+    "date": "2024-11-08",
+    "title": {
+      "en": "🏆 Jiyoung Kim wins Poster Award at AMIA 2024",
+      "ko": "🏆 김지영, AMIA 2024 포스터상 수상"
+    },
+    "description": {
+      "en": "M.S. student Jiyoung Kim received the Poster Award at the AMIA 2024 Annual Symposium for her research on multi-modal survival prediction.",
+      "ko": "석사과정 김지영 학생이 AMIA 2024에서 다중 모달 생존 예측 연구로 포스터상을 수상했습니다."
+    }
+  },
+  {
+    "id": 7,
+    "category": "event",
+    "date": "2024-09-01",
+    "title": {
+      "en": "🎉 Prof. Park invited as keynote speaker at Health AI Summit 2024",
+      "ko": "🎉 박소희 교수, Health AI Summit 2024 기조연설자 초청"
+    },
+    "description": {
+      "en": "Prof. Sohee Park has been invited as a keynote speaker at the Health AI Summit 2024 in Seoul, speaking on the future of AI-driven healthcare.",
+      "ko": "박소희 교수가 서울에서 열리는 Health AI Summit 2024에 기조연설자로 초청되어 AI 기반 헬스케어의 미래에 대해 발표합니다."
+    }
+  },
+  {
+    "id": 8,
+    "category": "publication",
+    "date": "2024-07-22",
+    "title": {
+      "en": "📄 Paper published in npj Digital Medicine",
+      "ko": "📄 npj Digital Medicine 논문 출판"
+    },
+    "description": {
+      "en": "Our paper on causal inference framework for digital health interventions has been published in npj Digital Medicine.",
+      "ko": "디지털 헬스 중재에 대한 인과 추론 프레임워크 논문이 npj Digital Medicine에 출판되었습니다."
+    }
+  }
+]

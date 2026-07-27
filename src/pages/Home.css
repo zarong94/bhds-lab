@@ -1,0 +1,118 @@
+/* ── Home: Research Highlights ── */
+.home-research {
+  background: var(--bg-primary);
+}
+
+.home-research__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.home-research__card {
+  position: relative;
+}
+
+.home-research__card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--primary-50);
+  color: var(--primary-600);
+  font-size: var(--text-base);
+  margin-bottom: var(--space-md);
+}
+
+.home-research__card-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--gray-900);
+}
+
+.home-research__card-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  line-height: 1.6;
+}
+
+.home-research__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.home-research__more {
+  text-align: center;
+}
+
+/* ── Home: Stats ── */
+.home-stats {
+  background: var(--bg-secondary);
+}
+
+.home-stats .section-title {
+  text-align: center;
+}
+
+.home-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+
+.home-stat {
+  text-align: center;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.home-stat__number {
+  font-family: var(--font-heading);
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--primary-700);
+  margin-bottom: 4px;
+}
+
+.home-stat__label {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+/* ── Home: News ── */
+.home-news {
+  background: var(--bg-primary);
+}
+
+.home-news__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .home-research__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-news__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
