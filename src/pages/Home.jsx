@@ -64,11 +64,11 @@ export default function Home() {
               <dt>{t('home.affiliation')}</dt>
               <dd>{pick(home.affiliation, lang)}</dd>
             </div>
-            {home.keywords.length > 0 && (
+            {home.keywords[lang]?.length > 0 && (
               <div className="home-about__fact">
                 <dt>{t('home.keywords')}</dt>
                 <dd className="home-about__tags">
-                  {home.keywords.map((k) => <span key={k} className="tag">{k}</span>)}
+                  {home.keywords[lang].map((k) => <span key={k} className="tag">{k}</span>)}
                 </dd>
               </div>
             )}
@@ -85,7 +85,6 @@ export default function Home() {
               <motion.div key={item.id} className="home-research__card card" custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 <div className="home-research__card-icon">{iconMap[item.icon] || iconMap.chart}</div>
                 <h3 className="home-research__card-title">{pick(item.title, lang)}</h3>
-                {lang === 'ko' && item.title.en !== item.title.ko && <p className="home-research__card-en">{item.title.en}</p>}
                 <p className="home-research__card-desc">{pick(item.description, lang)}</p>
               </motion.div>
             ))}

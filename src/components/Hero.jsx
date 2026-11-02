@@ -7,7 +7,6 @@ import './Hero.css';
 export default function Hero() {
   const { t, lang } = useLanguage();
   const { home } = useSiteData();
-  const other = lang === 'ko' ? 'en' : 'ko';
 
   return (
     <section className="hero">
@@ -19,11 +18,6 @@ export default function Hero() {
         <motion.h1 className="hero__title" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
           {pick(home.labName, lang)}
         </motion.h1>
-        {home.labName[other] && home.labName[other] !== home.labName[lang] && (
-          <motion.p className="hero__subname" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.15 }}>
-            {home.labName[other]}
-          </motion.p>
-        )}
         <motion.p className="hero__slogan" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
           {pick(home.tagline, lang)}
         </motion.p>

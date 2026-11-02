@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { useSiteData, pick } from '../context/SiteDataContext';
+import { useSiteData, pick, projectRole } from '../context/SiteDataContext';
 import PageHero from '../components/PageHero';
 import { FaBrain, FaChartLine, FaFileAlt, FaHeartbeat, FaLink } from 'react-icons/fa';
 import './Research.css';
@@ -18,17 +18,17 @@ const cardVariants = {
   visible: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.45, delay: i * 0.08 } }),
 };
 
-function ProjectItem({ p }) {
+function ProjectItem({ p, lang }) {
   const isPI = /PI\)|책임/.test(p.role) && !/Co-I/.test(p.role);
   return (
     <li className="project">
       <div className="project__main">
-        <h4 className="project__title">{p.title}</h4>
-        <p className="project__agency">{p.agency}</p>
+        <h4 className="project__title">{pick(p.title, lang)}</h4>
+        <p className="project__agency">{pick(p.agency, lang)}</p>
       </div>
       <div className="project__meta">
         <span className="project__period">{p.period}</span>
-        <span className={`project__role ${isPI ? 'project__role--pi' : ''}`}>{p.role}</span>
+        <span className={`project__role ${isPI ? 'project__role--pi' : ''}`}>{projectRole(p.role, lang)}</span>
       </div>
     </li>
   );
@@ -58,7 +58,6 @@ export default function Research() {
                 <div className="research__card-icon">{iconMap[item.icon] || iconMap.chart}</div>
                 <div>
                   <h3 className="research__card-title">{pick(item.title, lang)}</h3>
-                  {lang === 'ko' && item.title.en !== item.title.ko && <p className="research__card-en">{item.title.en}</p>}
                 </div>
               </div>
               <p className="research__card-desc">{pick(item.description, lang)}</p>
@@ -74,7 +73,7 @@ export default function Research() {
         {ongoing.length > 0 && (
           <section className="research__projects">
             <h2 className="research__heading">{t('research.ongoing')}</h2>
-            <ul className="project-list">{ongoing.map((p) => <ProjectItem key={p.id} p={p} />)}</ul>
+            <ul className="project-list">{ongoing.map((p) => <ProjectItem key={p.id} p={p} lang={lang} />)}</ul>
           </section>
         )}
 
@@ -84,7 +83,7 @@ export default function Research() {
             {Object.entries(byYear).sort(([a], [b]) => b.localeCompare(a)).map(([year, list]) => (
               <div key={year} className="project-year">
                 <h3 className="project-year__label">{year}</h3>
-                <ul className="project-list">{list.map((p) => <ProjectItem key={p.id} p={p} />)}</ul>
+                <ul className="project-list">{list.map((p) => <ProjectItem key={p.id} p={p} lang={lang} />)}</ul>
               </div>
             ))}
           </section>
