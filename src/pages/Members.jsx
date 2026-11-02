@@ -45,7 +45,8 @@ function MemberCard({ member, lang }) {
 export default function Members() {
   const { t, lang } = useLanguage();
   const { members } = useSiteData();
-  const categories = ['professor', 'postdoc', 'researcher', 'phd', 'ms', 'undergraduate'];
+  // 교수님은 '교수 소개' 페이지에 따로 있으므로 구성원 목록에서는 뺌
+  const categories = ['postdoc', 'researcher', 'phd', 'ms', 'undergraduate'];
 
   return (
     <div className="members">
