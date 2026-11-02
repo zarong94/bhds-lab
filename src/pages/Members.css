@@ -178,11 +178,11 @@
 
 /* ── Photos ── */
 .member-card__photo-wrap { display: flex; justify-content: center; margin-bottom: var(--space-md); }
-.member-card__photo { width: 160px; height: 210px; object-fit: cover; object-position: center 20%; border-radius: 50%; border: 4px solid var(--bg-card); box-shadow: 0 0 0 1px var(--primary-100), var(--shadow-md); }
-.members__grid--professor .member-card__photo { width: 190px; height: 250px; }
-.member-card__avatar { width: 160px; height: 210px; border-radius: 50%; }
+.member-card__photo { width: 190px; height: 220px; object-fit: cover; object-position: center 30%; border-radius: 50%; border: 4px solid var(--bg-card); box-shadow: 0 0 0 1px var(--primary-100), var(--shadow-md); }
+.members__grid--professor .member-card__photo { width: 210px; height: 240px; object-position: center 35%; }
+.member-card__avatar { width: 190px; height: 220px; border-radius: 50%; }
 @media (max-width: 640px) {
-  .member-card__photo, .member-card__avatar { width: 140px; height: 184px; }
+  .member-card__photo, .member-card__avatar { width: 168px; height: 196px; }
 }
 .member-card__name-other { font-size: var(--text-sm); color: var(--text-tertiary); margin-top: -2px; }
 .member-card__email { font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-xs); }
