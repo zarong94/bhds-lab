@@ -3,7 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useSiteData } from '../context/SiteDataContext';
 import PageHero from '../components/PageHero';
-import { FiSearch, FiExternalLink, FiCopy, FiCheck, FiAward } from 'react-icons/fi';
+import { FiSearch, FiExternalLink, FiCopy, FiCheck, FiAward, FiArrowUpRight } from 'react-icons/fi';
+import { SiGooglescholar } from 'react-icons/si';
 import './Publications.css';
 
 const HIGHLIGHT = /\b(Park S)\b(?=[,.]|$)/g;
@@ -143,6 +144,7 @@ function Presentations() {
 
 export default function Publications() {
   const { t } = useLanguage();
+  const { home } = useSiteData();
   const [params, setParams] = useSearchParams();
   const tab = params.get('tab') === 'presentations' ? 'presentations' : 'papers';
 
@@ -150,6 +152,11 @@ export default function Publications() {
     <div className="publications">
       <PageHero title={t('publications.title')} subtitle={t('publications.subtitle')} />
       <div className="container">
+        {home.scholar && (
+          <a className="pub-scholar" href={home.scholar} target="_blank" rel="noopener noreferrer">
+            <SiGooglescholar /> {t('publications.scholar')} <FiArrowUpRight />
+          </a>
+        )}
         <div className="pub-tabs" role="tablist">
           <button role="tab" aria-selected={tab === 'papers'} className={`pub-tabs__tab ${tab === 'papers' ? 'is-active' : ''}`} onClick={() => setParams({})}>
             {t('publications.tabPapers')}

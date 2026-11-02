@@ -58,7 +58,8 @@
     "copyBibtex": "BibTeX 복사",
     "oral": "구연발표",
     "poster": "포스터발표",
-    "total": "총 {n}편"
+    "total": "총 {n}편",
+    "scholar": "Google Scholar에서 전체 논문 보기"
   },
   "members": {
     "title": "구성원",

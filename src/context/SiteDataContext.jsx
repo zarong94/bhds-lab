@@ -86,6 +86,7 @@ export function normalize(raw) {
     recruitTitle: H('모집 제목'),
     recruitText: H('모집 문구'),
     email: H('연락처 이메일').ko,
+    scholar: H('구글스칼라').ko,
   };
 
   // 교수소개
