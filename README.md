@@ -1,140 +1,82 @@
-# 🎓 연세대학교 융합보건의료대학원 — BHDS Lab 홈페이지 관리 & 인수인계 매뉴얼
+# BHDS Lab 홈페이지 — 관리 & 인수인계 매뉴얼
 
-본 프로젝트는 연세대학교 융합보건의료대학원 **Bio-Health Data Science Lab (BHDS Lab / 박소희 교수님 연구실)** 공식 홈페이지 소스코드입니다.
+연세대학교 **바이오헬스 데이터사이언스 연구실 (Biostatistics & Health Data Science Lab, 박소희 교수님 연구실)** 홈페이지 소스코드입니다.
+주소: https://bhds-lab.vercel.app
 
-인수인계를 받는 다음 연구실 담당자는 본 문서를 참고하여 5분 만에 홈페이지 소식 및 논문, 구성원 정보를 업데이트할 수 있습니다.
-
----
-
-## 📁 1. 핵심 파일 구조 한눈에 보기
-
-코드를 몰라도 **`src/data/`** 폴더 안의 데이터 파일만 수정하면 웹사이트의 모든 내용이 자동으로 업데이트됩니다.
-
-```
-lab-website/
-├── src/
-│   ├── data/
-│   │   ├── publications.json   # 📄 논문 목록 & BibTeX
-│   │   ├── members.json        # 👥 연구실 구성원 (교수, 박사, 석사, 졸업생)
-│   │   ├── news.json           # 🏆 학생 수상, 연구실 소식, 공지사항
-│   │   └── research.json       # 🔬 주요 연구 분야
-│   ├── i18n/
-│   │   ├── ko.json             # 🇰🇷 한국어 텍스트 (교수 소개, 사이트 문구)
-│   │   └── en.json             # 🇺🇸 영어 텍스트 (기본값)
-│   └── index.css               # 🎨 메인 디자인 색상 (연세 블루 등)
-└── README.md                   # 📖 본 인수인계 매뉴얼
-```
+**내용 수정에는 코드가 필요 없습니다.** 모든 내용은 구글 드라이브의 시트와 사진 폴더에서 옵니다.
 
 ---
 
-## ✏️ 2. 홈페이지 콘텐츠 업데이트 방법 (가장 자주 쓰임)
+## 1. 내용 수정하기 (가장 자주 쓰임)
 
-### 📄 A. 새로운 논문 추가하기 (`src/data/publications.json`)
-파일 맨 위에 아래 양식으로 한 덩어리를 추가합니다:
+1. 공유드라이브 `homepage` 폴더의 구글시트 **"BHDS 홈페이지 내용"** 을 엽니다.
+2. 해당 탭을 고칩니다. 시트 첫 탭 **사용법** 에 작성 규칙이 정리돼 있습니다.
+3. 몇 분 안에 홈페이지에 반영됩니다. (새로고침하면 보입니다. 최대 약 3분 지연)
 
-```json
-{
-  "id": 11,
-  "title": "논문 제목 입력 (Deep Learning in Bio-Health)",
-  "authors": ["H. Lee", "S. Park"],
-  "venue": "Journal of Biomedical Informatics",
-  "year": 2026,
-  "type": "journal",
-  "doi": "https://doi.org/10.1016/j.jbi.2026.0000",
-  "bibtex": "@article{...}"
-}
-```
-* `type`: 저널 논문은 `"journal"`, 학회 논문은 `"conference"`로 적습니다.
+| 탭 | 홈페이지에서 나오는 곳 |
+|---|---|
+| 홈 | 첫 화면 문구, 연구실 소개, 모집 문구, 연락처 이메일 |
+| 교수소개 | 교수 소개 페이지 (기본정보·학력·경력·학회활동·초청강연·수상) |
+| 구성원 | 구성원 페이지 |
+| 연구분야 / 연구과제 | 연구 페이지 |
+| 논문 / 학술발표 | 논문·발표 페이지 (탭 2개) |
+| 소식 | 홈 화면 최근 소식, 소식 페이지 |
+| 수업 | 수업 페이지 |
 
----
+**사진**: `homepage/member`(구성원·교수님), `homepage/news`(소식) 폴더에 올리고, 시트의 `사진파일명` 칸에 파일 이름을 그대로 적습니다.
 
-### 👥 B. 신입생 / 졸업생 등록하기 (`src/data/members.json`)
-
-#### 1) 신입생 추가 (석사/박사)
-`"phd"` 또는 `"ms"` 항목에 아래 양식으로 추가합니다:
-
-```json
-{
-  "name": { "en": "Hong Gildong", "ko": "홍길동" },
-  "role": { "en": "M.S. Student (2026 –)", "ko": "석사과정 (2026 –)" },
-  "email": "gildong@yonsei.ac.kr",
-  "interests": { 
-    "en": ["Medical AI", "EHR Analysis"], 
-    "ko": ["의료 AI", "전자건강기록 분석"] 
-  }
-}
-```
-
-#### 2) 학생 졸업 시 (Alumni로 이동)
-`"alumni"` 항목에 아래 양식으로 추가합니다:
-
-```json
-{
-  "name": { "en": "Hong Gildong", "ko": "홍길동" },
-  "role": { "en": "M.S. (2024 – 2026)", "ko": "석사 (2024 – 2026)" },
-  "currentPosition": { "en": "Researcher, Naver Healthcare", "ko": "네이버 헬스케어 연구원" }
-}
-```
+> 주의: 탭 이름과 각 탭 첫 줄(열 제목)은 바꾸지 마세요. 사이트가 이 이름으로 내용을 찾습니다.
+> 숨기고 싶은 줄은 `공개` 칸에 `N`을 적으면 됩니다.
 
 ---
 
-### 🏆 C. 학생 수상 & 소식 등록하기 (`src/data/news.json`)
+## 2. 어떻게 연결돼 있나
 
-`news.json` 맨 위에 새로운 소식을 추가합니다:
-
-```json
-{
-  "id": 9,
-  "category": "award",
-  "date": "2026-08-01",
-  "title": {
-    "en": "Hong Gildong wins Best Student Paper Award",
-    "ko": "홍길동 학생, 2026 우수논문상 수상"
-  },
-  "description": {
-    "en": "M.S. student Hong Gildong received the Best Student Paper Award...",
-    "ko": "석사과정 홍길동 학생이 우수논문상을 수상했습니다."
-  }
-}
 ```
-* `category`: `"award"`(수상), `"publication"`(논문발표), `"event"`(행사), `"announcement"`(공지) 중 하나를 입력합니다.
+구글시트 + 드라이브 사진 폴더
+        │  (Apps Script 웹 앱: "BHDS 홈페이지 연결")
+        ▼
+ JSON 주소 (src/config.js 의 SHEET_API_URL)
+        │  방문자 브라우저가 페이지를 열 때 읽어 옴
+        ▼
+ 홈페이지 (GitHub → Vercel 자동 배포)
+```
+
+- **Apps Script**: 코드 사본은 `apps-script/Code.gs`. script.google.com 에서 "BHDS 홈페이지 연결" 프로젝트로 관리됩니다.
+  스크립트를 고친 뒤에는 **배포 → 배포 관리 → 수정(연필) → 버전: 새 버전 → 배포** 를 눌러야 반영됩니다. (주소는 그대로)
+- **안전장치**: 시트가 잠시 응답하지 않으면, 방문자 브라우저에 저장된 마지막 내용 → 없으면 `src/data/snapshot.json` 을 보여줍니다.
+  `snapshot.json` 은 Vercel 배포 때마다 시트에서 자동으로 새로 받아옵니다(`scripts/refresh-snapshot.mjs`).
+- **사진 주소**: 드라이브 파일 ID로 `lh3.googleusercontent.com` 이미지를 불러옵니다. `homepage` 폴더가 "링크가 있는 모든 사용자 — 보기"로 공유돼 있어야 합니다.
 
 ---
 
-## 🌐 3. 인터넷에 24시간 무료로 공개(배포)하는 방법
+## 3. 코드 구조 (개발자용)
 
-이 사이트는 **GitHub + Vercel** (또는 GitHub Pages) 조합으로 배포하면 **컴퓨터를 끌 필요 없이 24시간 무료 유지**됩니다.
-
-### 🌟 초간단 자동 배포 세팅법 (최초 1회만 설정)
-1. **GitHub**에 연구실 공용 저장소(Repository)를 만들고 이 소스코드를 올려둡니다.
-2. [Vercel.com](https://vercel.com) 회원가입 후 **[Import Project]**를 눌러 GitHub 저장소를 연결합니다.
-3. 배포 버튼을 누르면 1분 만에 `https://bhds-lab.vercel.app` 과 같은 무료 24시간 주소가 생성됩니다.
-
-### 🔄 배포 완료 후 일상적인 업데이트 절차
-웹 브라우저로 [GitHub.com](https://github.com) 접속 ➔ `src/data/` 폴더에서 파일 선택 ➔ **✏️ Edit (수정)** 버튼 클릭 ➔ 텍스트 수정 후 **[Commit changes]** 저장 ➔ **Vercel이 30초 안에 자동으로 실시간 홈페이지 반영!**
-
----
-
-## 💻 4. 개발 및 빌드 명령어 (개발자용)
+```
+src/
+├── config.js                    # 시트 연결 주소, 사진 주소 규칙
+├── context/SiteDataContext.jsx  # 시트 내용 불러오기·정리 (탭 → 화면용 데이터)
+├── context/LanguageContext.jsx  # 한국어/영어 전환 (기본 한국어)
+├── i18n/ko.json, en.json        # 메뉴·버튼 등 고정 문구
+├── data/snapshot.json           # 시트 내용 백업본 (자동 갱신)
+├── pages/                       # Home, About(교수), Members, Research, Publications, Teaching, News, Contact
+└── components/
+apps-script/Code.gs              # 시트 → JSON 스크립트 사본
+```
 
 ```bash
-# 1. 의존성 설치
 npm install
-
-# 2. 로컬 개발 서버 실행 (테스트용)
-npm run dev
-
-# 3. 배포용 정적 빌드 테스트
-npm run build
+npm run dev     # 로컬 개발 서버
+npm run build   # 배포용 빌드 (빌드 전에 snapshot 자동 갱신)
 ```
 
 ---
 
-## 🔑 5. 후임 담당자 인수인계 체크리스트
+## 4. 인수인계 체크리스트
 
-- [ ] 연구실 공용 GitHub 계정 아이디/비밀번호 전달
-- [ ] Vercel (또는 호스팅 서비스) 계정 권한 이전
-- [ ] 연세대학교 공식 도메인(`*.yonsei.ac.kr`) 연동 필요 시 학교 전산원에 CNAME 레코드 등록 요청
+- [ ] 공유드라이브 `homepage` 폴더(시트·사진) 편집 권한
+- [ ] Apps Script 프로젝트 "BHDS 홈페이지 연결" 소유자/편집자 (만든 사람 계정으로 실행됨 — 담당자가 바뀌면 새 담당자 계정으로 다시 배포하고 `src/config.js` 주소 교체)
+- [ ] GitHub 저장소 / Vercel 프로젝트 권한
+- [ ] 연세대학교 도메인 연결이 필요하면 학교 전산원에 CNAME 등록 요청
 
----
-*제작일: 2026년 7월 | Bio-Health Data Science Lab, Yonsei University*
+*2026-11 Google Sites(BHDS)의 내용과 사진을 시트로 옮기고, 시트 연동 구조로 변경.*

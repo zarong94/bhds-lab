@@ -1,173 +1,164 @@
 import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import publications from '../data/publications.json';
-import { FiSearch, FiExternalLink, FiCopy, FiCheck } from 'react-icons/fi';
+import { useSiteData } from '../context/SiteDataContext';
+import PageHero from '../components/PageHero';
+import { FiSearch, FiExternalLink, FiCopy, FiCheck, FiAward } from 'react-icons/fi';
 import './Publications.css';
 
-export default function Publications() {
-  const { t } = useLanguage();
+const HIGHLIGHT = /\b(Park S)\b(?=[,.]|$)/g;
+
+function Authors({ text }) {
+  const parts = text.split(HIGHLIGHT);
+  return parts.map((p, i) => (p === 'Park S' ? <strong key={i} className="publications__author--highlight">{p}</strong> : <span key={i}>{p}</span>));
+}
+
+const ROLE_EN = { '교신저자': 'Corresponding', '제1저자': 'First author', '공동저자': 'Co-author' };
+
+function Papers() {
+  const { t, lang } = useLanguage();
+  const { pubs } = useSiteData();
   const [search, setSearch] = useState('');
-  const [yearFilter, setYearFilter] = useState('all');
-  const [typeFilter, setTypeFilter] = useState('all');
+  const [year, setYear] = useState('all');
+  const [role, setRole] = useState('all');
   const [copiedId, setCopiedId] = useState(null);
 
-  const years = useMemo(() => {
-    const y = [...new Set(publications.map((p) => p.year))].sort((a, b) => b - a);
-    return y;
-  }, []);
+  const years = useMemo(() => [...new Set(pubs.map((p) => p.year))].sort((a, b) => b.localeCompare(a)), [pubs]);
+  const roles = useMemo(() => [...new Set(pubs.map((p) => p.role).filter(Boolean))], [pubs]);
 
   const filtered = useMemo(() => {
-    return publications.filter((pub) => {
-      const matchSearch =
-        !search ||
-        pub.title.toLowerCase().includes(search.toLowerCase()) ||
-        pub.authors.some((a) => a.toLowerCase().includes(search.toLowerCase())) ||
-        pub.venue.toLowerCase().includes(search.toLowerCase());
-      const matchYear = yearFilter === 'all' || pub.year === Number(yearFilter);
-      const matchType = typeFilter === 'all' || pub.type === typeFilter;
-      return matchSearch && matchYear && matchType;
-    });
-  }, [search, yearFilter, typeFilter]);
+    const q = search.trim().toLowerCase();
+    return pubs.filter((p) =>
+      (!q || [p.title, p.authors, p.journal].some((x) => x.toLowerCase().includes(q))) &&
+      (year === 'all' || p.year === year) &&
+      (role === 'all' || p.role === role));
+  }, [pubs, search, year, role]);
 
   const grouped = useMemo(() => {
-    const groups = {};
-    filtered.forEach((pub) => {
-      if (!groups[pub.year]) groups[pub.year] = [];
-      groups[pub.year].push(pub);
-    });
-    return Object.entries(groups).sort(([a], [b]) => b - a);
+    const g = {};
+    filtered.forEach((p) => { (g[p.year] = g[p.year] || []).push(p); });
+    return Object.entries(g).sort(([a], [b]) => b.localeCompare(a));
   }, [filtered]);
 
-  const handleCopy = (pub) => {
-    navigator.clipboard.writeText(pub.bibtex);
-    setCopiedId(pub.id);
-    setTimeout(() => setCopiedId(null), 2000);
+  const copy = (p) => {
+    navigator.clipboard?.writeText(p.bibtex).then(() => {
+      setCopiedId(p.id);
+      setTimeout(() => setCopiedId(null), 2000);
+    }).catch(() => {});
   };
 
   return (
-    <div className="publications">
-      <div className="publications__hero">
-        <div className="container">
-          <motion.h1
-            className="section-title"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {t('publications.title')}
-          </motion.h1>
-          <motion.p
-            className="section-subtitle"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            {t('publications.subtitle')}
-          </motion.p>
+    <>
+      <div className="publications__filters">
+        <div className="publications__search">
+          <FiSearch className="publications__search-icon" />
+          <input type="text" placeholder={t('publications.searchPlaceholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="publications__search-input" aria-label={t('publications.searchPlaceholder')} />
+        </div>
+        <div className="publications__filter-group">
+          <select value={year} onChange={(e) => setYear(e.target.value)} className="publications__select" aria-label={t('publications.allYears')}>
+            <option value="all">{t('publications.allYears')}</option>
+            {years.map((y) => <option key={y} value={y}>{y}</option>)}
+          </select>
+          {roles.length > 1 && (
+            <select value={role} onChange={(e) => setRole(e.target.value)} className="publications__select" aria-label={t('publications.allRoles')}>
+              <option value="all">{t('publications.allRoles')}</option>
+              {roles.map((r) => <option key={r} value={r}>{lang === 'ko' ? r : ROLE_EN[r] || r}</option>)}
+            </select>
+          )}
         </div>
       </div>
+      <p className="publications__count">{t('publications.total').replace('{n}', filtered.length)}</p>
 
-      <div className="container">
-        {/* Filters */}
-        <div className="publications__filters">
-          <div className="publications__search">
-            <FiSearch className="publications__search-icon" />
-            <input
-              type="text"
-              placeholder={t('publications.searchPlaceholder')}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="publications__search-input"
-              id="publication-search"
-            />
-          </div>
-          <div className="publications__filter-group">
-            <select
-              value={yearFilter}
-              onChange={(e) => setYearFilter(e.target.value)}
-              className="publications__select"
-              id="year-filter"
-            >
-              <option value="all">{t('publications.allYears')}</option>
-              {years.map((y) => (
-                <option key={y} value={y}>{y}</option>
-              ))}
-            </select>
-            <select
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
-              className="publications__select"
-              id="type-filter"
-            >
-              <option value="all">{t('publications.allTypes')}</option>
-              <option value="journal">{t('publications.journal')}</option>
-              <option value="conference">{t('publications.conference')}</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Publication List */}
-        <div className="publications__list">
-          {grouped.length === 0 && (
-            <div className="publications__empty">{t('publications.noResults')}</div>
-          )}
-          {grouped.map(([year, pubs]) => (
-            <div key={year} className="publications__year-group">
-              <h2 className="publications__year">{year}</h2>
-              {pubs.map((pub, i) => (
-                <motion.div
-                  key={pub.id}
-                  className="publications__item"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: i * 0.05 }}
-                >
-                  <div className="publications__item-type">
-                    <span className={`publications__type-badge publications__type-badge--${pub.type}`}>
-                      {pub.type === 'journal' ? 'J' : 'C'}
-                    </span>
-                  </div>
-                  <div className="publications__item-content">
-                    <h3 className="publications__item-title">{pub.title}</h3>
-                    <p className="publications__item-authors">
-                      {pub.authors.map((author, idx) => (
-                        <span key={idx}>
-                          <span className={author === 'S. Park' ? 'publications__author--highlight' : ''}>
-                            {author}
-                          </span>
-                          {idx < pub.authors.length - 1 ? ', ' : ''}
-                        </span>
-                      ))}
-                    </p>
-                    <p className="publications__item-venue">{pub.venue}</p>
-                  </div>
-                  <div className="publications__item-actions">
-                    {pub.doi && (
-                      <a
-                        href={pub.doi}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="publications__action-btn"
-                        title="Open DOI"
-                      >
-                        <FiExternalLink />
-                      </a>
-                    )}
-                    <button
-                      className="publications__action-btn"
-                      onClick={() => handleCopy(pub)}
-                      title={t('publications.copyBibtex')}
-                    >
-                      {copiedId === pub.id ? <FiCheck style={{ color: '#38A169' }} /> : <FiCopy />}
+      <div className="publications__list">
+        {grouped.length === 0 && <div className="publications__empty">{t('publications.noResults')}</div>}
+        {grouped.map(([y, list]) => (
+          <div key={y} className="publications__year-group">
+            <h2 className="publications__year">{y}</h2>
+            {list.map((p) => (
+              <div key={p.id} className="publications__item">
+                <div className="publications__item-content">
+                  <h3 className="publications__item-title">
+                    {p.doi ? <a href={p.doi} target="_blank" rel="noopener noreferrer">{p.title}</a> : p.title}
+                  </h3>
+                  <p className="publications__item-authors"><Authors text={p.authors} /></p>
+                  <p className="publications__item-venue">
+                    <em>{p.journal}</em>{p.citation ? `. ${p.citation}` : ''}
+                    {p.role && <span className={`publications__role publications__role--${p.role === '공동저자' ? 'co' : 'lead'}`}>{lang === 'ko' ? p.role : ROLE_EN[p.role] || p.role}</span>}
+                  </p>
+                </div>
+                <div className="publications__item-actions">
+                  {p.doi && <a href={p.doi} target="_blank" rel="noopener noreferrer" className="publications__action-btn" title="DOI"><FiExternalLink /></a>}
+                  {p.bibtex && (
+                    <button className="publications__action-btn" onClick={() => copy(p)} title={t('publications.copyBibtex')}>
+                      {copiedId === p.id ? <FiCheck style={{ color: '#38A169' }} /> : <FiCopy />}
                     </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function Presentations() {
+  const { t } = useLanguage();
+  const { presentations } = useSiteData();
+  const groups = [['oral', t('publications.oral')], ['poster', t('publications.poster')]];
+
+  return (
+    <div className="publications__list">
+      {groups.map(([type, label]) => {
+        const list = presentations.filter((p) => p.type === type);
+        if (!list.length) return null;
+        const byYear = list.reduce((acc, p) => { const y = p.date.slice(0, 4); (acc[y] = acc[y] || []).push(p); return acc; }, {});
+        return (
+          <section key={type} className="pres-group">
+            <h2 className="pres-group__title">{label}</h2>
+            {Object.entries(byYear).sort(([a], [b]) => b.localeCompare(a)).map(([y, items]) => (
+              <div key={y} className="publications__year-group">
+                <h3 className="publications__year">{y}</h3>
+                {items.map((p) => (
+                  <div key={p.id} className="publications__item">
+                    <div className="publications__item-content">
+                      <h4 className="publications__item-title">{p.title}</h4>
+                      <p className="publications__item-authors"><strong>{p.presenter}</strong> · {p.conference}</p>
+                      <p className="publications__item-venue">
+                        {p.date}
+                        {p.award && <span className="pres__award"><FiAward /> {p.award}</span>}
+                      </p>
+                    </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          ))}
+                ))}
+              </div>
+            ))}
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function Publications() {
+  const { t } = useLanguage();
+  const [params, setParams] = useSearchParams();
+  const tab = params.get('tab') === 'presentations' ? 'presentations' : 'papers';
+
+  return (
+    <div className="publications">
+      <PageHero title={t('publications.title')} subtitle={t('publications.subtitle')} />
+      <div className="container">
+        <div className="pub-tabs" role="tablist">
+          <button role="tab" aria-selected={tab === 'papers'} className={`pub-tabs__tab ${tab === 'papers' ? 'is-active' : ''}`} onClick={() => setParams({})}>
+            {t('publications.tabPapers')}
+          </button>
+          <button role="tab" aria-selected={tab === 'presentations'} className={`pub-tabs__tab ${tab === 'presentations' ? 'is-active' : ''}`} onClick={() => setParams({ tab: 'presentations' })}>
+            {t('publications.tabPresentations')}
+          </button>
         </div>
+        {tab === 'papers' ? <Papers /> : <Presentations />}
       </div>
     </div>
   );

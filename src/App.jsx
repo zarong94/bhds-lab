@@ -9,6 +9,9 @@ import Research from './pages/Research';
 import Publications from './pages/Publications';
 import Members from './pages/Members';
 import Contact from './pages/Contact';
+import Teaching from './pages/Teaching';
+import News from './pages/News';
+import { SiteDataProvider } from './context/SiteDataContext';
 import { useEffect } from 'react';
 
 function ScrollToTop() {
@@ -43,7 +46,10 @@ function AppRoutes() {
         <Route path="/research" element={<PageWrapper><Research /></PageWrapper>} />
         <Route path="/publications" element={<PageWrapper><Publications /></PageWrapper>} />
         <Route path="/members" element={<PageWrapper><Members /></PageWrapper>} />
+        <Route path="/teaching" element={<PageWrapper><Teaching /></PageWrapper>} />
+        <Route path="/news" element={<PageWrapper><News /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+        <Route path="*" element={<PageWrapper><Home /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );
@@ -53,12 +59,14 @@ export default function App() {
   return (
     <BrowserRouter>
       <LanguageProvider>
+        <SiteDataProvider>
         <ScrollToTop />
         <Navbar />
         <main>
           <AppRoutes />
         </main>
         <Footer />
+        </SiteDataProvider>
       </LanguageProvider>
     </BrowserRouter>
   );

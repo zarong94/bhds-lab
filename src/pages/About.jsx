@@ -1,143 +1,127 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { FiCalendar, FiBriefcase, FiAward } from 'react-icons/fi';
+import { useSiteData, pick } from '../context/SiteDataContext';
+import PageHero from '../components/PageHero';
+import Photo from '../components/Photo';
+import { FiMail, FiBookOpen, FiBriefcase, FiUsers, FiMic, FiAward } from 'react-icons/fi';
 import './About.css';
 
-export default function About() {
-  const { t } = useLanguage();
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+};
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
+function Section({ icon, title, children, last }) {
+  return (
+    <motion.section className={`about__section ${last ? 'about__section--last' : ''}`} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={fadeUp}>
+      <h2 className="about__section-title">{icon}<span>{title}</span></h2>
+      {children}
+    </motion.section>
+  );
+}
+
+function CvList({ items }) {
+  return (
+    <ul className="cv-list">
+      {items.map((it, i) => (
+        <li key={i} className="cv-list__item">
+          <span className="cv-list__text">{it.text}</span>
+          <span className="cv-list__period">{it.period}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default function About() {
+  const { t, lang } = useLanguage();
+  const { prof } = useSiteData();
+  const [showAllTalks, setShowAllTalks] = useState(false);
+  const talkYears = showAllTalks ? prof.talks : prof.talks.slice(0, 2);
+  const initials = prof.name.en.split(' ').map((n) => n[0]).join('').slice(0, 2);
 
   return (
     <div className="about">
-      <div className="about__hero">
-        <div className="about__hero-bg" />
-        <div className="container">
-          <motion.h1
-            className="section-title"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {t('about.title')}
-          </motion.h1>
-        </div>
-      </div>
+      <PageHero title={t('about.title')} />
 
       <div className="container">
-        {/* Profile Section */}
-        <motion.section
-          className="about__profile"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-        >
+        <motion.section className="about__profile" initial="hidden" animate="visible" variants={fadeUp}>
           <div className="about__avatar">
-            <div className="about__avatar-placeholder">
-              <span>SP</span>
-            </div>
+            <Photo
+              src={prof.photo}
+              alt={pick(prof.name, lang)}
+              className="about__photo"
+              fallback={<div className="about__avatar-placeholder"><span>{initials}</span></div>}
+            />
           </div>
           <div className="about__info">
             <h2 className="about__name">
-              {t('about.educationList') ? 'Sohee Park, Ph.D.' : '박소희'}
+              {pick(prof.name, lang)}
+              <span className="about__name-other">{lang === 'ko' ? prof.name.en : prof.name.ko}</span>
             </h2>
-            <p className="about__role">{t('about.professorTitle')}</p>
-            <p className="about__affiliation">
-              {t('hero.department')}, {t('hero.university')}
-            </p>
-            <p className="about__bio">{t('about.bio')}</p>
+            <p className="about__role">{pick(prof.title, lang)}</p>
+            <p className="about__affiliation">{pick(prof.affiliation, lang)}</p>
+            {prof.email && (
+              <a className="about__email" href={`mailto:${prof.email}`}><FiMail /> {prof.email}</a>
+            )}
           </div>
         </motion.section>
 
-        {/* Research Interests */}
-        <motion.section
-          className="about__section"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-        >
-          <h2 className="about__section-title">{t('about.interests')}</h2>
-          <div className="about__tags">
-            {(Array.isArray(t('about.interestTags')) ? t('about.interestTags') : []).map((tag, i) => (
-              <span key={i} className={`tag ${i % 3 === 0 ? 'tag--warm' : i % 3 === 1 ? 'tag--gold' : ''}`}>
-                {tag}
-              </span>
-            ))}
-          </div>
-        </motion.section>
+        {prof.education.length > 0 && (
+          <Section icon={<FiBookOpen className="about__section-icon" />} title={t('about.education')}>
+            <CvList items={prof.education} />
+          </Section>
+        )}
 
-        {/* Education Timeline */}
-        <motion.section
-          className="about__section"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-        >
-          <h2 className="about__section-title">
-            <FiCalendar className="about__section-icon" />
-            {t('about.education')}
-          </h2>
-          <div className="about__timeline">
-            {(Array.isArray(t('about.educationList')) ? t('about.educationList') : []).map((item, i) => (
-              <div key={i} className="about__timeline-item">
-                <div className="about__timeline-dot" />
-                <div className="about__timeline-year">{item.year}</div>
-                <div className="about__timeline-detail">{item.detail}</div>
+        {prof.career.length > 0 && (
+          <Section icon={<FiBriefcase className="about__section-icon" />} title={t('about.career')}>
+            {prof.career.map((g) => (
+              <div key={g.group} className="cv-group">
+                {g.group && <h3 className="cv-group__title">{g.group}</h3>}
+                <CvList items={g.items} />
               </div>
             ))}
-          </div>
-        </motion.section>
+          </Section>
+        )}
 
-        {/* Experience */}
-        <motion.section
-          className="about__section"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-        >
-          <h2 className="about__section-title">
-            <FiBriefcase className="about__section-icon" />
-            {t('about.experience')}
-          </h2>
-          <div className="about__timeline">
-            {(Array.isArray(t('about.experienceList')) ? t('about.experienceList') : []).map((item, i) => (
-              <div key={i} className="about__timeline-item">
-                <div className="about__timeline-dot" />
-                <div className="about__timeline-year">{item.year}</div>
-                <div className="about__timeline-detail">{item.detail}</div>
+        {prof.service.length > 0 && (
+          <Section icon={<FiUsers className="about__section-icon" />} title={t('about.service')}>
+            <CvList items={prof.service} />
+          </Section>
+        )}
+
+        {prof.awards.length > 0 && (
+          <Section icon={<FiAward className="about__section-icon" />} title={t('about.awards')}>
+            <CvList items={prof.awards} />
+          </Section>
+        )}
+
+        {prof.talks.length > 0 && (
+          <Section icon={<FiMic className="about__section-icon" />} title={t('about.talks')} last>
+            {talkYears.map((y) => (
+              <div key={y.year} className="talk-year">
+                <h3 className="talk-year__label">{y.year}</h3>
+                <ul className="talk-list">
+                  {y.items.map((it, i) => (
+                    <li key={i} className="talk">
+                      <p className="talk__title">{it.text}</p>
+                      <p className="talk__meta">
+                        {[it.venue, it.period].filter(Boolean).join(' · ')}
+                        {it.note && <span className="talk__note">{it.note}</span>}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
-          </div>
-        </motion.section>
-
-        {/* Awards */}
-        <motion.section
-          className="about__section about__section--last"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-        >
-          <h2 className="about__section-title">
-            <FiAward className="about__section-icon" />
-            {t('about.awards')}
-          </h2>
-          <ul className="about__awards">
-            {(Array.isArray(t('about.awardsList')) ? t('about.awardsList') : []).map((award, i) => (
-              <li key={i} className="about__award-item">
-                <span className="about__award-icon">🏆</span>
-                {award}
-              </li>
-            ))}
-          </ul>
-        </motion.section>
+            {prof.talks.length > 2 && (
+              <button className="btn btn--secondary about__more" onClick={() => setShowAllTalks(!showAllTalks)}>
+                {showAllTalks ? t('about.showLess') : t('about.showMore')}
+              </button>
+            )}
+          </Section>
+        )}
       </div>
     </div>
   );

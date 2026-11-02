@@ -175,3 +175,12 @@
     gap: 4px;
   }
 }
+
+/* ── Photos ── */
+.member-card__photo-wrap { display: flex; justify-content: center; margin-bottom: var(--space-md); }
+.member-card__photo { width: 120px; height: 150px; object-fit: cover; border-radius: var(--radius-lg); border: 3px solid var(--bg-card); box-shadow: var(--shadow-md); }
+.members__grid--professor .member-card__photo { width: 160px; height: 200px; }
+.member-card__name-other { font-size: var(--text-sm); color: var(--text-tertiary); margin-top: -2px; }
+.member-card__email { font-size: var(--text-xs); color: var(--text-tertiary); margin-top: var(--space-xs); }
+.members__alumni-list { display: grid; gap: var(--space-md); }
+.members__alumni-other { font-weight: 400; color: var(--text-tertiary); margin-left: 4px; }

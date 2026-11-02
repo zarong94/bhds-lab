@@ -2,7 +2,7 @@
    BHDS Lab — Global Design System
    ============================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
   /* ── Primary (Yonsei Blue palette) ── */
@@ -61,8 +61,8 @@
   --text-link-hover: #0A509E;
 
   /* ── Typography ── */
-  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Outfit', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* ── Sizes ── */
@@ -320,3 +320,15 @@ ul, ol {
   background: var(--primary-200);
   color: var(--primary-900);
 }
+
+/* ── Page hero (shared) ── */
+.page-hero {
+  padding: calc(var(--nav-height) + var(--space-3xl)) 0 var(--space-2xl);
+  background: var(--bg-hero);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.page-hero .section-title { margin-bottom: var(--space-xs); }
+.page-hero__subtitle { margin-bottom: 0; }
+
+body { word-break: keep-all; overflow-wrap: anywhere; }

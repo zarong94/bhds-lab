@@ -1,97 +1,66 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import membersData from '../data/members.json';
-import { FiMail, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { useSiteData, pick } from '../context/SiteDataContext';
+import PageHero from '../components/PageHero';
+import Photo from '../components/Photo';
+import { FiMail, FiGlobe } from 'react-icons/fi';
 import { SiGooglescholar } from 'react-icons/si';
 import './Members.css';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, delay: i * 0.08 },
-  }),
+  hidden: { opacity: 0, y: 24 },
+  visible: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.4, delay: i * 0.06 } }),
 };
 
 function MemberCard({ member, lang }) {
+  const initials = member.name.en.split(' ').map((n) => n[0]).join('').slice(0, 2);
   return (
     <div className="member-card card">
-      <div className="member-card__avatar">
-        <span>{member.name[lang].split(' ').map(n => n[0]).join('').slice(0, 2)}</span>
+      <div className="member-card__photo-wrap">
+        <Photo
+          src={member.photo}
+          alt={pick(member.name, lang)}
+          className="member-card__photo"
+          fallback={<div className="member-card__avatar"><span>{initials}</span></div>}
+        />
       </div>
-      <h3 className="member-card__name">{member.name[lang]}</h3>
-      <p className="member-card__role">{member.role[lang]}</p>
-      {member.interests && (
+      <h3 className="member-card__name">{pick(member.name, lang)}</h3>
+      <p className="member-card__name-other">{lang === 'ko' ? member.name.en : member.name.ko}</p>
+      <p className="member-card__role">{pick(member.role, lang)}</p>
+      {member.interests[lang]?.length > 0 && (
         <div className="member-card__interests">
-          {member.interests[lang].map((interest, i) => (
-            <span key={i} className="tag">{interest}</span>
-          ))}
+          {member.interests[lang].map((x) => <span key={x} className="tag">{x}</span>)}
         </div>
       )}
       <div className="member-card__links">
-        {member.email && (
-          <a href={`mailto:${member.email}`} className="member-card__link" title="Email">
-            <FiMail />
-          </a>
-        )}
-        {member.links?.scholar && (
-          <a href={member.links.scholar} target="_blank" rel="noopener noreferrer" className="member-card__link" title="Google Scholar">
-            <SiGooglescholar />
-          </a>
-        )}
+        {member.email && <a href={`mailto:${member.email}`} className="member-card__link" title={member.email}><FiMail /></a>}
+        {member.scholar && <a href={member.scholar} target="_blank" rel="noopener noreferrer" className="member-card__link" title="Google Scholar"><SiGooglescholar /></a>}
+        {member.website && <a href={member.website} target="_blank" rel="noopener noreferrer" className="member-card__link" title="Website"><FiGlobe /></a>}
       </div>
+      {member.email && <p className="member-card__email">{member.email}</p>}
     </div>
   );
 }
 
 export default function Members() {
   const { t, lang } = useLanguage();
-  const [showAlumni, setShowAlumni] = useState(false);
-  const categories = ['professor', 'phd', 'ms', 'undergraduate'];
+  const { members } = useSiteData();
+  const categories = ['professor', 'postdoc', 'researcher', 'phd', 'ms', 'undergraduate'];
 
   return (
     <div className="members">
-      <div className="members__hero">
-        <div className="container">
-          <motion.h1
-            className="section-title"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {t('members.title')}
-          </motion.h1>
-          <motion.p
-            className="section-subtitle"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            {t('members.subtitle')}
-          </motion.p>
-        </div>
-      </div>
-
+      <PageHero title={t('members.title')} subtitle={t('members.subtitle')} />
       <div className="container">
         {categories.map((cat) => {
-          const members = membersData[cat];
-          if (!members || members.length === 0) return null;
+          const list = members[cat];
+          if (!list || list.length === 0) return null;
           return (
             <section key={cat} className="members__section">
               <h2 className="members__category-title">{t(`members.categories.${cat}`)}</h2>
               <div className={`members__grid ${cat === 'professor' ? 'members__grid--professor' : ''}`}>
-                {members.map((member, i) => (
-                  <motion.div
-                    key={member.email || member.name.en}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeUp}
-                  >
-                    <MemberCard member={member} lang={lang} />
+                {list.map((m, i) => (
+                  <motion.div key={m.id} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+                    <MemberCard member={m} lang={lang} />
                   </motion.div>
                 ))}
               </div>
@@ -99,36 +68,22 @@ export default function Members() {
           );
         })}
 
-        {/* Alumni */}
-        {membersData.alumni && membersData.alumni.length > 0 && (
+        {members.alumni.length > 0 && (
           <section className="members__section members__section--alumni">
-            <button
-              className="members__alumni-toggle"
-              onClick={() => setShowAlumni(!showAlumni)}
-            >
-              <h2 className="members__category-title" style={{ marginBottom: 0 }}>
-                {t('members.categories.alumni')}
-              </h2>
-              {showAlumni ? <FiChevronUp size={24} /> : <FiChevronDown size={24} />}
-            </button>
-            {showAlumni && (
-              <motion.div
-                className="members__alumni-list"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                transition={{ duration: 0.3 }}
-              >
-                {membersData.alumni.map((alum, i) => (
-                  <div key={alum.name.en} className="members__alumni-item">
-                    <div className="members__alumni-name">{alum.name[lang]}</div>
-                    <div className="members__alumni-role">{alum.role[lang]}</div>
-                    <div className="members__alumni-pos">
-                      {t('members.currentPosition')}: {alum.currentPosition[lang]}
-                    </div>
+            <h2 className="members__category-title">{t('members.categories.alumni')}</h2>
+            <div className="members__alumni-list">
+              {members.alumni.map((a) => (
+                <div key={a.id} className="members__alumni-item">
+                  <div className="members__alumni-name">
+                    {pick(a.name, lang)} <span className="members__alumni-other">{lang === 'ko' ? a.name.en : a.name.ko}</span>
                   </div>
-                ))}
-              </motion.div>
-            )}
+                  <div className="members__alumni-role">{pick(a.role, lang)}</div>
+                  {pick(a.current, lang) && (
+                    <div className="members__alumni-pos">{t('members.currentPosition')}: {pick(a.current, lang)}</div>
+                  )}
+                </div>
+              ))}
+            </div>
           </section>
         )}
       </div>

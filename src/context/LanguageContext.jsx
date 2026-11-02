@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import en from '../i18n/en.json';
 import ko from '../i18n/ko.json';
 
@@ -7,7 +7,7 @@ const translations = { en, ko };
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useState(() => { try { return localStorage.getItem('bhds-lang') || 'ko'; } catch { return 'ko'; } });
 
   const t = (path) => {
     const keys = path.split('.');
@@ -16,8 +16,8 @@ export function LanguageProvider({ children }) {
       if (result && result[key] !== undefined) {
         result = result[key];
       } else {
-        // Fallback to English
-        let fallback = translations['en'];
+        // Fallback to Korean
+        let fallback = translations['ko'];
         for (const k of keys) {
           if (fallback && fallback[k] !== undefined) {
             fallback = fallback[k];
@@ -32,8 +32,14 @@ export function LanguageProvider({ children }) {
   };
 
   const toggleLang = () => {
-    setLang((prev) => (prev === 'en' ? 'ko' : 'en'));
+    setLang((prev) => {
+      const next = prev === 'en' ? 'ko' : 'en';
+      try { localStorage.setItem('bhds-lang', next); } catch { /* ignore */ }
+      return next;
+    });
   };
+
+  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, toggleLang, t }}>

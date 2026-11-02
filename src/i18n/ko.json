@@ -2,123 +2,107 @@
   "nav": {
     "home": "홈",
     "about": "교수 소개",
-    "research": "연구 분야",
-    "publications": "논문",
+    "research": "연구",
+    "publications": "논문·발표",
     "members": "구성원",
+    "teaching": "수업",
+    "news": "소식",
     "contact": "연락처"
   },
   "hero": {
-    "labName": "바이오헬스 데이터사이언스 연구실",
-    "university": "연세대학교",
-    "department": "융합보건의료대학원",
-    "slogan": "데이터 기반 발견으로 건강의 미래를 열다",
     "cta": "연구 분야 보기",
     "ctaSecondary": "구성원 소개"
   },
   "home": {
+    "about": "연구실 소개",
+    "pi": "연구책임자",
+    "affiliation": "소속",
+    "keywords": "키워드",
     "researchHighlights": "주요 연구 분야",
-    "newsTitle": "연구실 소식 & 수상",
-    "newsSubtitle": "연구실의 최신 성과와 공지사항을 확인하세요",
+    "newsTitle": "연구실 소식",
+    "newsSubtitle": "연구실의 최근 활동과 수상 소식",
     "viewAll": "전체 보기",
-    "statsTitle": "연구실 한눈에 보기",
-    "publications": "발표 논문",
-    "projects": "연구 프로젝트",
-    "membersCount": "연구실 구성원",
-    "collaborations": "공동 연구"
+    "publications": "논문",
+    "projects": "연구과제",
+    "membersCount": "구성원",
+    "presentations": "학술발표",
+    "contactButton": "문의하기"
   },
   "about": {
     "title": "교수 소개",
-    "professorTitle": "부교수 · 연구실장",
-    "bio": "박소희 교수는 연세대학교 융합보건의료대학원 부교수로, 첨단 데이터 과학 및 인공지능 방법론을 활용하여 생의학 및 공중보건 분야의 핵심 과제를 해결하는 연구에 집중하고 있습니다. 국내외 저명한 학술지와 학회에 다수의 논문을 발표하였으며, 여러 차례 학술상을 수상한 바 있습니다.",
+    "email": "이메일",
     "education": "학력",
-    "experience": "경력",
-    "awards": "수상 이력",
-    "interests": "연구 관심 분야",
-    "educationList": [
-      { "year": "2012", "detail": "서울대학교 생물통계학 박사" },
-      { "year": "2008", "detail": "서울대학교 통계학 석사" },
-      { "year": "2006", "detail": "연세대학교 통계학 학사" }
-    ],
-    "experienceList": [
-      { "year": "2020 – 현재", "detail": "연세대학교 융합보건의료대학원 부교수" },
-      { "year": "2016 – 2020", "detail": "연세대학교 융합보건의료대학원 조교수" },
-      { "year": "2013 – 2016", "detail": "하버드 T.H. Chan 공중보건대학원 박사후 연구원" }
-    ],
-    "awardsList": [
-      "대한의료정보학회 최우수논문상 (2024)",
-      "AMIA Annual Symposium 젊은 연구자상 (2022)",
-      "연세대학교 연구 우수상 (2021)",
-      "한국연구재단 신진연구자 지원사업 선정 (2019)"
-    ],
-    "interestTags": [
-      "건강 데이터 분석",
-      "의료 AI",
-      "전자건강기록",
-      "임상 자연어처리",
-      "생존 분석",
-      "디지털 헬스",
-      "인과 추론",
-      "정밀 의학"
-    ]
+    "career": "경력",
+    "service": "학회 활동",
+    "talks": "초청 강연 및 학술발표",
+    "awards": "수상",
+    "showMore": "이전 연도 더 보기",
+    "showLess": "접기"
   },
   "research": {
-    "title": "연구 분야",
-    "subtitle": "우리 연구실은 데이터 과학과 의료의 교차점에서 실세계 건강 문제 해결을 위한 혁신적 솔루션을 개발합니다."
+    "title": "연구",
+    "subtitle": "관찰자료와 실제 보건의료 데이터를 위한 통계 방법론을 연구합니다.",
+    "areas": "연구 분야",
+    "ongoing": "진행 중인 과제",
+    "completed": "완료된 과제"
   },
   "publications": {
-    "title": "논문 목록",
-    "subtitle": "연구실 주요 논문 목록입니다. 전체 논문은 Google Scholar를 참고해 주세요.",
-    "searchPlaceholder": "제목, 저자, 키워드로 검색...",
+    "title": "논문 · 학술발표",
+    "subtitle": "연구실과 박소희 교수의 논문, 학회 발표 목록입니다.",
+    "tabPapers": "논문",
+    "tabPresentations": "학술발표",
+    "searchPlaceholder": "제목, 저자, 학술지로 검색",
     "allYears": "전체 연도",
-    "allTypes": "전체 유형",
-    "journal": "저널",
-    "conference": "학회",
-    "copyBibtex": "BibTeX",
-    "copied": "복사됨!",
-    "noResults": "검색 조건에 맞는 논문이 없습니다."
+    "allRoles": "전체 저자역할",
+    "noResults": "검색 조건에 맞는 항목이 없습니다.",
+    "copyBibtex": "BibTeX 복사",
+    "oral": "구연발표",
+    "poster": "포스터발표",
+    "total": "총 {n}편"
   },
   "members": {
-    "title": "연구실 구성원",
-    "subtitle": "우리 연구실의 연구자 및 학생들을 소개합니다.",
+    "title": "구성원",
+    "subtitle": "함께 연구하는 사람들",
     "categories": {
       "professor": "교수",
+      "postdoc": "박사후연구원",
+      "researcher": "연구원",
       "phd": "박사과정",
       "ms": "석사과정",
-      "undergraduate": "학부 연구생",
+      "undergraduate": "학부연구생",
       "alumni": "졸업생"
     },
-    "showAlumni": "졸업생 보기",
-    "hideAlumni": "졸업생 숨기기",
-    "currentPosition": "현재 소속"
+    "currentPosition": "현재"
   },
-  "contact": {
-    "title": "연락처",
-    "subtitle": "대학원 진학 및 공동연구에 관심 있는 분들의 문의를 환영합니다.",
-    "address": "주소",
-    "addressDetail": "서울특별시 서대문구 연세로 50, 연세대학교 융합보건의료대학원 (우 03722)",
-    "email": "이메일",
-    "phone": "전화번호",
-    "officeHours": "방문 시간",
-    "officeHoursDetail": "월 – 금, 오전 10시 – 오후 5시 (사전 예약 필요)",
-    "prospective": "대학원생 모집",
-    "prospectiveText": "바이오헬스 데이터사이언스에 관심 있는 열정적인 학생을 항상 찾고 있습니다. 데이터와 AI를 활용하여 건강 성과를 개선하는 데 관심이 있다면, 이력서와 간략한 연구 관심사를 보내주세요.",
-    "applyButton": "문의하기",
-    "locationTitle": "위치"
-  },
-  "footer": {
-    "labName": "바이오헬스 데이터사이언스 연구실",
-    "university": "연세대학교",
-    "department": "융합보건의료대학원",
-    "copyright": "© 2026 BHDS Lab, 연세대학교. All rights reserved.",
-    "quickLinks": "바로가기",
-    "connect": "소셜 링크"
+  "teaching": {
+    "title": "수업",
+    "subtitle": "박소희 교수 담당 교과목",
+    "courses": "교과목",
+    "majorLink": "전공 소개 바로가기"
   },
   "news": {
+    "title": "연구실 소식",
+    "subtitle": "학회 참가, 수상, 연구실 행사 소식",
     "categories": {
       "award": "수상",
-      "publication": "논문 발표",
+      "publication": "논문",
       "event": "행사",
       "announcement": "공지"
     }
+  },
+  "contact": {
+    "title": "연락처",
+    "subtitle": "대학원 진학 및 공동연구 문의를 환영합니다.",
+    "address": "주소",
+    "addressDetail": "서울특별시 서대문구 연세로 50 연세대학교",
+    "email": "이메일",
+    "prospective": "대학원생 모집",
+    "applyButton": "이메일로 문의하기",
+    "locationTitle": "오시는 길"
+  },
+  "footer": {
+    "copyright": "© {year} BHDS Lab, 연세대학교",
+    "quickLinks": "바로가기",
+    "contact": "연락처"
   }
 }

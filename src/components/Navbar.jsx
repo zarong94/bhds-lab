@@ -23,9 +23,11 @@ export default function Navbar() {
   const links = [
     { to: '/', label: t('nav.home') },
     { to: '/about', label: t('nav.about') },
+    { to: '/members', label: t('nav.members') },
     { to: '/research', label: t('nav.research') },
     { to: '/publications', label: t('nav.publications') },
-    { to: '/members', label: t('nav.members') },
+    { to: '/teaching', label: t('nav.teaching') },
+    { to: '/news', label: t('nav.news') },
     { to: '/contact', label: t('nav.contact') },
   ];
 
