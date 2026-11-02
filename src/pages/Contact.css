@@ -61,7 +61,7 @@
 
 /* Prospective Students */
 .contact__prospective-card {
-  background: linear-gradient(135deg, var(--primary-50) 0%, var(--accent-peach) 100%);
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
   border-radius: var(--radius-xl);
   padding: var(--space-2xl);
   text-align: center;
@@ -124,3 +124,6 @@
     grid-template-columns: 1fr;
   }
 }
+
+.contact__roles { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: var(--space-md); }
+.contact__roles li { padding: 6px 14px; border-radius: var(--radius-full); background: rgba(255, 255, 255, 0.9); color: var(--primary-800); font-size: var(--text-sm); font-weight: 600; }
