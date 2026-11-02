@@ -47,7 +47,7 @@ export default function Research() {
 
   return (
     <div className="research">
-      <PageHero title={t('research.title')} subtitle={t('research.subtitle')} />
+      <PageHero title={t('research.title')} />
 
       <div className="container">
         <h2 className="research__heading">{t('research.areas')}</h2>

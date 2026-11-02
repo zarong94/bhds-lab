@@ -113,7 +113,6 @@ export default function Home() {
         <section className="section home-news">
           <div className="container">
             <h2 className="section-title">{t('home.newsTitle')}</h2>
-            <p className="section-subtitle">{t('home.newsSubtitle')}</p>
             <div className="home-news__grid">
               {news.slice(0, 3).map((item, i) => (
                 <motion.div key={item.id} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>

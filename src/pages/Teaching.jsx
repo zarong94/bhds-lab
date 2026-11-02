@@ -10,7 +10,7 @@ export default function Teaching() {
 
   return (
     <div className="teaching">
-      <PageHero title={t('teaching.title')} subtitle={t('teaching.subtitle')} />
+      <PageHero title={t('teaching.title')} />
       <div className="container teaching__grid">
         {teaching.map((g) => (
           <section key={g.school.ko + g.major} className="teaching__card card">

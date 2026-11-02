@@ -89,7 +89,9 @@
       "publication": "Paper",
       "event": "Event",
       "announcement": "Notice"
-    }
+    },
+    "more": "Read more",
+    "less": "Show less"
   },
   "contact": {
     "title": "Contact",
