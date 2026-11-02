@@ -14,7 +14,7 @@ export default function Contact() {
 
   return (
     <div className="contact">
-      <PageHero title={t('contact.title')} subtitle={t('contact.subtitle')} />
+      <PageHero title={t('contact.title')} />
       <div className="container">
         <div className="contact__grid">
           <motion.div className="contact__info" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>

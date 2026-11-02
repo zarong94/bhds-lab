@@ -49,7 +49,7 @@ export default function Members() {
 
   return (
     <div className="members">
-      <PageHero title={t('members.title')} subtitle={t('members.subtitle')} />
+      <PageHero title={t('members.title')} />
       <div className="container">
         {categories.map((cat) => {
           const list = members[cat];

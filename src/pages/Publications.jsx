@@ -150,7 +150,7 @@ export default function Publications() {
 
   return (
     <div className="publications">
-      <PageHero title={t('publications.title')} subtitle={t('publications.subtitle')} />
+      <PageHero title={t('publications.title')} />
       <div className="container">
         {home.scholar && (
           <a className="pub-scholar" href={home.scholar} target="_blank" rel="noopener noreferrer">

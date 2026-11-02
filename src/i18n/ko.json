@@ -5,7 +5,7 @@
     "research": "연구",
     "publications": "논문·발표",
     "members": "구성원",
-    "teaching": "수업",
+    "teaching": "강의",
     "news": "소식",
     "contact": "연락처"
   },
@@ -76,7 +76,7 @@
     "currentPosition": "현재"
   },
   "teaching": {
-    "title": "수업",
+    "title": "강의",
     "subtitle": "박소희 교수 담당 교과목",
     "courses": "교과목",
     "majorLink": "전공 소개 바로가기"
@@ -89,7 +89,9 @@
       "publication": "논문",
       "event": "행사",
       "announcement": "공지"
-    }
+    },
+    "more": "더 보기",
+    "less": "접기"
   },
   "contact": {
     "title": "연락처",
