@@ -87,6 +87,8 @@ export function normalize(raw) {
     recruitText: H('모집 문구'),
     email: H('연락처 이메일').ko,
     scholar: H('구글스칼라').ko,
+    address: H('주소'),
+    recruitRoles: { ko: list(H('모집 분야').ko), en: list(H('모집 분야').en) },
   };
 
   // 교수소개

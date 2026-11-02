@@ -24,7 +24,7 @@ export default function Contact() {
                 <div>
                   <h3 className="contact__info-label">{t('contact.address')}</h3>
                   <p className="contact__info-detail">{pick(home.affiliation, lang)}</p>
-                  <p className="contact__info-detail">{t('contact.addressDetail')}</p>
+                  <p className="contact__info-detail">{pick(home.address, lang) || t('contact.addressDetail')}</p>
                 </div>
               </div>
               {email && (
@@ -43,6 +43,11 @@ export default function Contact() {
             <div className="contact__prospective-card">
               <div className="contact__prospective-icon"><FiUsers size={32} /></div>
               <h2 className="contact__prospective-title">{pick(home.recruitTitle, lang) || t('contact.prospective')}</h2>
+              {home.recruitRoles[lang]?.length > 0 && (
+                <ul className="contact__roles">
+                  {home.recruitRoles[lang].map((r) => <li key={r}>{r}</li>)}
+                </ul>
+              )}
               <p className="contact__prospective-text">{pick(home.recruitText, lang)}</p>
               {email && (
                 <a href={`mailto:${email}`} className="btn btn--primary"><FiMail /> {t('contact.applyButton')}</a>
@@ -56,7 +61,7 @@ export default function Contact() {
           <div className="contact__map-container">
             <iframe
               title="Yonsei University"
-              src="https://www.google.com/maps?q=Yonsei+University+Seoul&output=embed"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(home.address.ko ? home.address.ko.replace(/\s*\S*호$/, '') : '연세대학교')}&output=embed`}
               width="100%"
               height="350"
               style={{ border: 0, borderRadius: 'var(--radius-lg)' }}
