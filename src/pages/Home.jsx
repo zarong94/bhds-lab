@@ -23,7 +23,13 @@ export default function Home() {
     <div className="home">
       {/* 1. 사진 히어로 */}
       <section className={`hx-hero ${home.heroPhoto ? '' : 'hx-hero--plain'}`}>
-        {home.heroPhoto && <Photo src={home.heroPhoto} alt="" className="hx-hero__img" style={{ objectPosition: `center ${home.heroPos}` }} />}
+        {home.heroPhoto && (
+          <>
+            {/* 뒤: 같은 사진을 흐리게 넓게 깔고, 앞: 사진 전체를 작게 보여줌 */}
+            <Photo src={home.heroPhoto} alt="" className="hx-hero__backdrop" />
+            <Photo src={home.heroPhoto} alt="" className="hx-hero__img" style={{ objectPosition: `center ${home.heroPos}` }} />
+          </>
+        )}
         <div className="hx-hero__shade" />
         <div className="hx-hero__content container">
           <motion.p className="hx-hero__eyebrow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
