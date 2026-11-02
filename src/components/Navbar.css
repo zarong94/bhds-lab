@@ -178,7 +178,9 @@
   .navbar--on-photo .navbar__logo,
   .navbar--on-photo .navbar__link,
   .navbar--on-photo .navbar__lang { color: #fff; }
-  .navbar--on-photo .navbar__link--active { color: #fff; }
+  .navbar--on-photo .navbar__link--active { color: #fff; background: rgba(255, 255, 255, 0.16); }
+  .navbar--on-photo .navbar__link:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+  .navbar--on-photo .navbar__lang { background: transparent; }
   .navbar--on-photo .navbar__lang { border-color: rgba(255, 255, 255, 0.6); }
   .navbar--on-photo .navbar__lang-active { color: #fff; font-weight: 700; }
   .navbar--on-photo .navbar__lang-divider { color: rgba(255, 255, 255, 0.6); }
