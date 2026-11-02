@@ -134,6 +134,7 @@ export function normalize(raw) {
       photo: photo(r['사진파일명'], 600),
       scholar: s(r['구글스칼라']),
       website: s(r['홈페이지']),
+      school: s(r['대학원']),
       order: num(r['순서'], 1000 + i),
     });
   });
