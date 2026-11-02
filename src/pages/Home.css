@@ -101,9 +101,8 @@
 .hx-hero__photo {
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 24px 60px rgba(0, 20, 50, 0.35);
+  box-shadow: 0 40px 70px -30px rgba(0, 15, 40, 0.65), 0 12px 28px -12px rgba(0, 15, 40, 0.35);
   aspect-ratio: 4 / 3;
-  border: 4px solid rgba(255, 255, 255, 0.85);
 }
 .hx-hero__img {
   width: 100%;
