@@ -205,6 +205,11 @@ export function normalize(raw) {
   });
   const teaching = [...courseGroups.values()];
 
+  // 홈 화면 큰 사진: 시트 '홈' 탭의 '대표 사진'·'띠 사진' (없으면 최근 소식 사진)
+  const newsPhotos = news.map((n) => n.photo).filter(Boolean);
+  home.heroPhoto = photo(H('대표 사진').ko, 2000) || newsPhotos[0] || null;
+  home.bandPhoto = photo(H('띠 사진').ko, 2000) || newsPhotos.find((p) => p !== home.heroPhoto) || null;
+
   return { home, prof, members, areas, projects, pubs, presentations, news, teaching, updated: raw.updated };
 }
 

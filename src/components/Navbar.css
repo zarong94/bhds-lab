@@ -172,3 +172,16 @@
     z-index: 999;
   }
 }
+
+/* 홈 화면 사진 위에서는 흰 글씨 */
+@media (min-width: 901px) {
+  .navbar--on-photo .navbar__logo,
+  .navbar--on-photo .navbar__link,
+  .navbar--on-photo .navbar__lang { color: #fff; }
+  .navbar--on-photo .navbar__link--active { color: #fff; }
+  .navbar--on-photo .navbar__lang { border-color: rgba(255, 255, 255, 0.6); }
+  .navbar--on-photo .navbar__lang-active { color: #fff; font-weight: 700; }
+  .navbar--on-photo .navbar__lang-divider { color: rgba(255, 255, 255, 0.6); }
+}
+.navbar--on-photo .navbar__logo,
+.navbar--on-photo .navbar__mobile-toggle { color: #fff; }

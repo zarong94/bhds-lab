@@ -32,7 +32,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
+    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${!scrolled && location.pathname === '/' ? 'navbar--on-photo' : ''}`}>
       <div className="navbar__inner container">
         <NavLink to="/" className="navbar__logo">
           <div className="navbar__logo-icon">
