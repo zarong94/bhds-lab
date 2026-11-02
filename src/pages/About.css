@@ -227,7 +227,7 @@
 .talk { padding: 6px 0 10px; }
 .talk__title { font-size: var(--text-sm); font-weight: 500; color: var(--text-primary); line-height: 1.5; }
 .talk__meta { font-size: var(--text-xs); color: var(--text-tertiary); margin-top: 2px; }
-.talk__note { margin-left: 8px; padding: 1px 8px; border-radius: var(--radius-full); background: var(--accent-gold-light); color: #7a5a12; font-weight: 600; }
+.talk__note { margin-left: 8px; padding: 1px 8px; border-radius: var(--radius-full); background: var(--primary-50); color: var(--primary-700); font-weight: 600; }
 .about__more { margin-top: var(--space-lg); }
 
 @media (max-width: 640px) {
