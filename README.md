@@ -1,7 +1,7 @@
 # BHDS Lab 홈페이지 — 관리 & 인수인계 매뉴얼
 
 연세대학교 **바이오헬스 데이터사이언스 연구실 (Biostatistics & Health Data Science Lab, 박소희 교수님 연구실)** 홈페이지 소스코드입니다.
-주소: https://bhds-lab.vercel.app
+주소: https://bhds-lab-ashy.vercel.app
 
 **내용 수정에는 코드가 필요 없습니다.** 모든 내용은 구글 드라이브의 시트와 사진 폴더에서 옵니다.
 
