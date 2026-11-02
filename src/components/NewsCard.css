@@ -93,3 +93,11 @@
 .newscard--compact .newscard__desc {
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
+
+/* 주황·금색 포인트 제거: 왼쪽 색 선 없애고, 분류 배지는 파랑/회색 계열로 */
+.newscard::before { display: none; }
+.newscard__badge { text-transform: none; letter-spacing: 0; }
+.newscard__badge--award { color: var(--primary-800); background: var(--primary-100); }
+.newscard__badge--publication { color: var(--primary-700); background: var(--primary-50); }
+.newscard__badge--event,
+.newscard__badge--announcement { color: var(--gray-700); background: var(--gray-200); }

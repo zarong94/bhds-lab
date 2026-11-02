@@ -1,7 +1,7 @@
 /* ── Teaching ── */
 .teaching__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); padding: var(--space-2xl) var(--space-xl) var(--space-4xl); }
 .teaching__card { padding: var(--space-xl); display: flex; flex-direction: column; }
-.teaching__school-en { font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-coral); font-weight: 600; }
+.teaching__school-en { font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); font-weight: 600; }
 .teaching__school { font-size: var(--text-xl); margin-top: 4px; }
 .teaching__major { font-size: var(--text-sm); color: var(--primary-700); font-weight: 500; margin-top: 2px; }
 .teaching__label { font-size: var(--text-sm); color: var(--text-tertiary); font-weight: 600; margin: var(--space-lg) 0 var(--space-sm); }
