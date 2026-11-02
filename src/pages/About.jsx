@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useSiteData, pick } from '../context/SiteDataContext';
 import PageHero from '../components/PageHero';
 import Photo from '../components/Photo';
+import { SiGooglescholar } from 'react-icons/si';
 import { FiMail, FiBookOpen, FiBriefcase, FiUsers, FiMic, FiAward } from 'react-icons/fi';
 import './About.css';
 
@@ -36,7 +37,8 @@ function CvList({ items }) {
 
 export default function About() {
   const { t, lang } = useLanguage();
-  const { prof } = useSiteData();
+  const { prof, home, members } = useSiteData();
+  const scholar = home.scholar || members.professor[0]?.scholar;
   const [showAllTalks, setShowAllTalks] = useState(false);
   const talkYears = showAllTalks ? prof.talks : prof.talks.slice(0, 2);
   const initials = prof.name.en.split(' ').map((n) => n[0]).join('').slice(0, 2);
@@ -64,6 +66,9 @@ export default function About() {
             <p className="about__affiliation">{pick(prof.affiliation, lang)}</p>
             {prof.email && (
               <a className="about__email" href={`mailto:${prof.email}`}><FiMail /> {prof.email}</a>
+            )}
+            {scholar && (
+              <a className="about__email about__scholar" href={scholar} target="_blank" rel="noopener noreferrer"><SiGooglescholar /> Google Scholar</a>
             )}
           </div>
         </motion.section>

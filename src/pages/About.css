@@ -235,3 +235,4 @@
   .talk-year { grid-template-columns: 1fr; gap: var(--space-xs); }
   .about__photo { width: 160px; height: 200px; }
 }
+.about__scholar { margin-left: var(--space-lg); }

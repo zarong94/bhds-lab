@@ -58,7 +58,8 @@
     "copyBibtex": "Copy BibTeX",
     "oral": "Oral Presentations",
     "poster": "Poster Presentations",
-    "total": "{n} items"
+    "total": "{n} items",
+    "scholar": "All papers on Google Scholar"
   },
   "members": {
     "title": "Members",
