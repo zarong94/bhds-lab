@@ -23,7 +23,7 @@ export default function Home() {
     <div className="home">
       {/* 1. 사진 히어로 */}
       <section className={`hx-hero ${home.heroPhoto ? '' : 'hx-hero--plain'}`}>
-        {home.heroPhoto && <Photo src={home.heroPhoto} alt="" className="hx-hero__img" />}
+        {home.heroPhoto && <Photo src={home.heroPhoto} alt="" className="hx-hero__img" style={{ objectPosition: `center ${home.heroPos}` }} />}
         <div className="hx-hero__shade" />
         <div className="hx-hero__content container">
           <motion.p className="hx-hero__eyebrow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
@@ -63,7 +63,7 @@ export default function Home() {
       {/* 3. 가로 사진 띠 */}
       {home.bandPhoto && (
         <div className="hx-band">
-          <Photo src={home.bandPhoto} alt="" className="hx-band__img" />
+          <Photo src={home.bandPhoto} alt="" className="hx-band__img" style={{ objectPosition: `center ${home.bandPos}` }} />
           <div className="hx-band__stats container">
             <div><strong>{pubs.length}</strong><span>{t('home.publications')}</span></div>
             <div><strong>{projects.length}</strong><span>{t('home.projects')}</span></div>

@@ -209,6 +209,17 @@ export function normalize(raw) {
   const newsPhotos = news.map((n) => n.photo).filter(Boolean);
   home.heroPhoto = photo(H('대표 사진').ko, 2000) || newsPhotos[0] || null;
   home.bandPhoto = photo(H('띠 사진').ko, 2000) || newsPhotos.find((p) => p !== home.heroPhoto) || null;
+  // 사진의 어느 부분을 보여줄지: 위 / 가운데 / 아래 (또는 0~100%)
+  const pos = (v, fallback) => {
+    const x = s(v);
+    if (/^위|top/i.test(x)) return '15%';
+    if (/^가운데|center/i.test(x)) return '50%';
+    if (/^아래|bottom/i.test(x)) return '85%';
+    if (/^\d{1,3}%?$/.test(x)) return x.replace('%', '') + '%';
+    return fallback;
+  };
+  home.heroPos = pos(H('대표 사진 위치').ko, '75%');
+  home.bandPos = pos(H('띠 사진 위치').ko, '45%');
 
   return { home, prof, members, areas, projects, pubs, presentations, news, teaching, updated: raw.updated };
 }

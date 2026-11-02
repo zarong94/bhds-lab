@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 /** 드라이브 사진. 불러오지 못하면 이니셜(또는 아무것도) 보여줍니다. */
-export default function Photo({ src, alt, className = '', fallback = null }) {
+export default function Photo({ src, alt, className = '', fallback = null, style }) {
   const [failed, setFailed] = useState(false);
   if (!src || failed) return fallback;
   return (
@@ -9,6 +9,7 @@ export default function Photo({ src, alt, className = '', fallback = null }) {
       src={src}
       alt={alt}
       className={className}
+      style={style}
       loading="lazy"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
