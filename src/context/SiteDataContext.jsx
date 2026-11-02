@@ -82,7 +82,7 @@ export function normalize(raw) {
     intro: H('연구실 소개'),
     pi: H('연구책임자'),
     affiliation: H('소속'),
-    keywords: list(H('키워드').ko),
+    keywords: { ko: list(H('키워드').ko), en: list(H('키워드').en) },
     recruitTitle: H('모집 제목'),
     recruitText: H('모집 문구'),
     email: H('연락처 이메일').ko,
@@ -98,12 +98,12 @@ export function normalize(raw) {
   rows('교수소개').forEach((r) => {
     const kind = s(r['구분']);
     const group = s(r['그룹']);
-    const item = { text: s(r['내용']), period: s(r['기간·날짜']), venue: s(r['기관·행사']), note: s(r['비고']) };
-    if (kind === '기본정보') prof.info[group] = item.text;
+    const item = { text: bi(r['내용'], r['내용(영문)']), period: s(r['기간·날짜']), venue: bi(r['기관·행사'], r['기관·행사(영문)']), note: s(r['비고']) };
+    if (kind === '기본정보') prof.info[group] = item.text.ko;
     else if (kind === '학력') prof.education.push(item);
     else if (kind === '경력') {
-      if (!careerGroups.has(group)) careerGroups.set(group, []);
-      careerGroups.get(group).push(item);
+      if (!careerGroups.has(group)) careerGroups.set(group, { name: bi(group, r['그룹(영문)']), items: [] });
+      careerGroups.get(group).items.push(item);
     } else if (kind === '학회활동') prof.service.push(item);
     else if (kind === '초청강연') {
       const y = group || item.period.slice(0, 4);
@@ -111,7 +111,7 @@ export function normalize(raw) {
       talkYears.get(y).push(item);
     } else if (kind === '수상') prof.awards.push(item);
   });
-  prof.career = [...careerGroups].map(([group, items]) => ({ group, items }));
+  prof.career = [...careerGroups.values()].map((g) => ({ group: g.name, items: g.items }));
   prof.talks = [...talkYears].sort(([a], [b]) => b.localeCompare(a)).map(([year, items]) => ({ year, items }));
   const pi = prof.info;
   prof.name = bi(pi['이름'], pi['영문이름']);
@@ -156,8 +156,8 @@ export function normalize(raw) {
   const projects = rows('연구과제').map((r, i) => ({
     id: `proj-${i}`,
     ongoing: s(r['상태']) === '진행중',
-    title: s(r['과제명']),
-    agency: s(r['지원기관']),
+    title: bi(r['과제명'], r['과제명(영문)']),
+    agency: bi(r['지원기관'], r['지원기관(영문)']),
     period: s(r['기간']),
     role: s(r['역할']),
     start: dateKey(s(r['기간']).slice(0, 7)),
@@ -182,10 +182,10 @@ export function normalize(raw) {
     id: `pres-${i}`,
     type: s(r['구분']) === '구연' ? 'oral' : 'poster',
     date: dateKey(r['날짜']),
-    title: s(r['제목']),
-    presenter: s(r['발표자']),
-    conference: s(r['학회']),
-    award: s(r['수상']),
+    title: bi(r['제목'], r['제목(영문)']),
+    presenter: bi(r['발표자'], r['발표자(영문)']),
+    conference: bi(r['학회'], r['학회(영문)']),
+    award: bi(r['수상'], r['수상(영문)']),
   })).sort((a, b) => b.date.localeCompare(a.date));
 
   // 소식
@@ -203,9 +203,9 @@ export function normalize(raw) {
   rows('수업').forEach((r) => {
     const key = s(r['대학원']) + '|' + s(r['전공']);
     if (!courseGroups.has(key)) {
-      courseGroups.set(key, { school: bi(r['대학원'], r['대학원(영문)']), major: s(r['전공']), link: s(r['전공소개 링크']), courses: [] });
+      courseGroups.set(key, { school: bi(r['대학원'], r['대학원(영문)']), major: bi(r['전공'], r['전공(영문)']), link: s(r['전공소개 링크']), courses: [] });
     }
-    courseGroups.get(key).courses.push({ code: s(r['과목코드']), name: s(r['과목명']) });
+    courseGroups.get(key).courses.push({ code: s(r['과목코드']), name: bi(r['과목명'], r['과목명(영문)']) });
   });
   const teaching = [...courseGroups.values()];
 
@@ -264,3 +264,18 @@ export function useSiteData() {
 
 /** 언어별 텍스트 고르기: {ko, en} → 현재 언어 (비어 있으면 한국어) */
 export const pick = (obj, lang) => (obj ? obj[lang] || obj.ko || obj.en || '' : '');
+
+/** 기간의 '현재'를 영어 화면에서는 'Present'로 */
+export const period = (p, lang) => (lang === 'en' ? s(p).replace(/현재/g, 'Present') : s(p));
+
+/** 과제 역할: 한국어 화면은 한국어만, 영어 화면은 영어만 */
+export const projectRole = (role, lang) => {
+  const r = s(role);
+  const isPI = /연구책임자|\(PI\)/.test(r);
+  const isCo = /공동연구원|Co-I/.test(r);
+  if (lang === 'en') return isPI ? 'Principal Investigator' : isCo ? 'Co-Investigator' : r;
+  return isPI ? '연구책임자' : isCo ? '공동연구원' : r.replace(/\s*\([^)]*\)\s*$/, '');
+};
+
+/** 비고(논문발표 등) 영어 표기 */
+export const noteLabel = (note, lang) => (lang === 'en' && s(note) === '논문발표' ? 'Paper presentation' : s(note));

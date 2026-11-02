@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { useSiteData } from '../context/SiteDataContext';
+import { useSiteData, pick } from '../context/SiteDataContext';
 import PageHero from '../components/PageHero';
 import { FiSearch, FiExternalLink, FiCopy, FiCheck, FiAward, FiArrowUpRight } from 'react-icons/fi';
 import { SiGooglescholar } from 'react-icons/si';
@@ -105,7 +105,7 @@ function Papers() {
 }
 
 function Presentations() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { presentations } = useSiteData();
   const groups = [['oral', t('publications.oral')], ['poster', t('publications.poster')]];
 
@@ -124,11 +124,11 @@ function Presentations() {
                 {items.map((p) => (
                   <div key={p.id} className="publications__item">
                     <div className="publications__item-content">
-                      <h4 className="publications__item-title">{p.title}</h4>
-                      <p className="publications__item-authors"><strong>{p.presenter}</strong> · {p.conference}</p>
+                      <h4 className="publications__item-title">{pick(p.title, lang)}</h4>
+                      <p className="publications__item-authors"><strong>{pick(p.presenter, lang)}</strong> · {pick(p.conference, lang)}</p>
                       <p className="publications__item-venue">
                         {p.date}
-                        {p.award && <span className="pres__award"><FiAward /> {p.award}</span>}
+                        {p.award.ko && <span className="pres__award"><FiAward /> {pick(p.award, lang)}</span>}
                       </p>
                     </div>
                   </div>

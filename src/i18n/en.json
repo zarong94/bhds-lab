@@ -26,7 +26,10 @@
     "projects": "Projects",
     "membersCount": "Members",
     "presentations": "Presentations",
-    "contactButton": "Contact us"
+    "contactButton": "Contact us",
+    "eyebrowAbout": "About Us",
+    "eyebrowResearch": "Research",
+    "eyebrowNews": "Lab News"
   },
   "about": {
     "title": "Professor",

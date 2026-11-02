@@ -26,7 +26,10 @@
     "projects": "연구과제",
     "membersCount": "구성원",
     "presentations": "학술발표",
-    "contactButton": "문의하기"
+    "contactButton": "문의하기",
+    "eyebrowAbout": "",
+    "eyebrowResearch": "",
+    "eyebrowNews": ""
   },
   "about": {
     "title": "교수 소개",

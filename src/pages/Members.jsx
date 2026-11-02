@@ -30,7 +30,6 @@ function MemberCard({ member, lang }) {
         />
       </div>
       <h3 className="member-card__name">{pick(member.name, lang)}</h3>
-      <p className="member-card__name-other">{lang === 'ko' ? member.name.en : member.name.ko}</p>
       <p className="member-card__role">{pick(member.role, lang)}</p>
       {member.interests[lang]?.length > 0 && (
         <div className="member-card__interests">
@@ -89,7 +88,7 @@ export default function Members() {
               {g.list.map((a) => (
                 <div key={a.id} className="members__alumni-item">
                   <div className="members__alumni-name">
-                    {pick(a.name, lang)} <span className="members__alumni-other">{lang === 'ko' ? a.name.en : a.name.ko}</span>
+                    {pick(a.name, lang)}
                   </div>
                   <div className="members__alumni-role">{pick(a.role, lang)}</div>
                   {pick(a.current, lang) && (

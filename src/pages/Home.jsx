@@ -15,7 +15,6 @@ const fadeUp = {
 export default function Home() {
   const { t, lang } = useLanguage();
   const { home, areas, news, pubs, projects, members, presentations } = useSiteData();
-  const other = lang === 'ko' ? 'en' : 'ko';
   const memberCount = ['professor', 'postdoc', 'researcher', 'phd', 'ms', 'undergraduate']
     .reduce((n, k) => n + members[k].length, 0);
 
@@ -28,7 +27,7 @@ export default function Home() {
         <div className="hx-hero__inner container">
           <div className="hx-hero__text">
             <motion.p className="hx-hero__eyebrow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
-              {pick(home.school, lang)} · {home.labName[other]}
+              {pick(home.school, lang)}
             </motion.p>
             <motion.h1 className="hx-hero__title" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
               {pick(home.tagline, lang)}
@@ -52,9 +51,9 @@ export default function Home() {
       {/* 2. 연구실 소개 */}
       <section className="hx-intro container">
         <motion.div className="hx-intro__head" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-          <p className="hx-eyebrow">About Us</p>
+          {t('home.eyebrowAbout') && <p className="hx-eyebrow">{t('home.eyebrowAbout')}</p>}
           <h2 className="hx-intro__title">
-            {pick(home.labName, lang)} <span className="hx-accent">{pick(home.short, lang)}</span>
+            {pick(home.labName, lang)}
           </h2>
         </motion.div>
         <motion.div className="hx-intro__body" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
@@ -83,14 +82,13 @@ export default function Home() {
       {/* 4. 연구 분야 */}
       <section className="hx-research">
         <div className="container">
-          <p className="hx-eyebrow hx-center">Research</p>
+          {t('home.eyebrowResearch') && <p className="hx-eyebrow hx-center">{t('home.eyebrowResearch')}</p>}
           <h2 className="hx-section-title hx-center">{t('home.researchHighlights')}</h2>
           <div className="hx-research__grid">
             {areas.map((a, i) => (
               <motion.div key={a.id} className="hx-area" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
                 <span className="hx-area__num">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="hx-area__title">{pick(a.title, lang)}</h3>
-                {lang === 'ko' && a.title.en !== a.title.ko && <p className="hx-area__en">{a.title.en}</p>}
                 <p className="hx-area__desc">{pick(a.description, lang)}</p>
               </motion.div>
             ))}
@@ -102,7 +100,7 @@ export default function Home() {
       {/* 5. 연구실 소식 — 세로 사진 카드 */}
       {news.length > 0 && (
         <section className="hx-news container">
-          <p className="hx-eyebrow hx-center">Lab News</p>
+          {t('home.eyebrowNews') && <p className="hx-eyebrow hx-center">{t('home.eyebrowNews')}</p>}
           <h2 className="hx-section-title hx-center">{t('home.newsTitle')}</h2>
           <div className="hx-news__grid">
             {news.slice(0, 3).map((n, i) => (
