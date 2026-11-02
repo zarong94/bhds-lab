@@ -7,6 +7,11 @@ import { FiMail, FiGlobe } from 'react-icons/fi';
 import { SiGooglescholar } from 'react-icons/si';
 import './Members.css';
 
+const SCHOOL_EN = {
+  '융합보건의료대학원': 'Graduate School of Transdisciplinary Health Sciences',
+  '보건대학원': 'Graduate School of Public Health',
+};
+
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.4, delay: i * 0.06 } }),
@@ -47,6 +52,11 @@ export default function Members() {
   const { members } = useSiteData();
   // 교수님은 '교수 소개' 페이지에 따로 있으므로 구성원 목록에서는 뺌
   const categories = ['postdoc', 'researcher', 'phd', 'ms', 'undergraduate'];
+  // 졸업생은 대학원별로 묶음 (시트 '구성원' 탭의 '대학원' 칸)
+  const order = ['융합보건의료대학원', '보건대학원'];
+  const schools = [...new Set(members.alumni.map((a) => a.school))]
+    .sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99) || (a === '' ? 1 : 0));
+  const alumniGroups = schools.map((school) => ({ school, list: members.alumni.filter((a) => a.school === school) }));
 
   return (
     <div className="members">
@@ -72,8 +82,11 @@ export default function Members() {
         {members.alumni.length > 0 && (
           <section className="members__section members__section--alumni">
             <h2 className="members__category-title">{t('members.categories.alumni')}</h2>
+            {alumniGroups.map((g) => (
+            <div key={g.school || 'etc'} className="members__alumni-group">
+            {g.school && <h3 className="members__alumni-school">{SCHOOL_EN[g.school] && lang === 'en' ? SCHOOL_EN[g.school] : g.school}</h3>}
             <div className="members__alumni-list">
-              {members.alumni.map((a) => (
+              {g.list.map((a) => (
                 <div key={a.id} className="members__alumni-item">
                   <div className="members__alumni-name">
                     {pick(a.name, lang)} <span className="members__alumni-other">{lang === 'ko' ? a.name.en : a.name.ko}</span>
@@ -85,6 +98,8 @@ export default function Members() {
                 </div>
               ))}
             </div>
+            </div>
+            ))}
           </section>
         )}
       </div>

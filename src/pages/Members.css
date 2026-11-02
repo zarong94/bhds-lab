@@ -194,3 +194,6 @@
   border: none;
   box-shadow: 0 22px 40px -18px rgba(15, 35, 70, 0.45), 0 6px 16px -6px rgba(15, 35, 70, 0.18);
 }
+
+.members__alumni-group + .members__alumni-group { margin-top: var(--space-xl); }
+.members__alumni-school { font-size: var(--text-base); font-weight: 700; color: var(--primary-700); margin-bottom: var(--space-md); }
