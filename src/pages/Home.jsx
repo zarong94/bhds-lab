@@ -30,11 +30,13 @@ export default function Home() {
               {pick(home.school, lang)}
             </motion.p>
             <motion.h1 className="hx-hero__title" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
-              {pick(home.tagline, lang)}
-            </motion.h1>
-            <motion.p className="hx-hero__lab" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.25 }}>
               {pick(home.labName, lang)}
-            </motion.p>
+            </motion.h1>
+            {areas.length > 0 && (
+              <motion.p className="hx-hero__areas" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.25 }}>
+                {areas.map((a) => pick(a.title, lang)).join(' · ')}
+              </motion.p>
+            )}
             <motion.div className="hx-hero__actions" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.35 }}>
               <Link to="/research" className="hx-btn hx-btn--solid">{t('hero.cta')}</Link>
               <Link to="/members" className="hx-btn hx-btn--ghost">{t('hero.ctaSecondary')}</Link>
