@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useSiteData, pick } from '../context/SiteDataContext';
 import PageHero from '../components/PageHero';
@@ -142,30 +141,20 @@ function Presentations() {
   );
 }
 
-export default function Publications() {
+export default function Publications({ view = 'papers' }) {
   const { t } = useLanguage();
   const { home } = useSiteData();
-  const [params, setParams] = useSearchParams();
-  const tab = params.get('tab') === 'presentations' ? 'presentations' : 'papers';
 
   return (
     <div className="publications">
-      <PageHero title={t('publications.title')} />
+      <PageHero title={t(view === 'presentations' ? 'nav.presentations' : 'nav.papers')} />
       <div className="container">
-        {home.scholar && (
+        {view === 'papers' && home.scholar && (
           <a className="pub-scholar" href={home.scholar} target="_blank" rel="noopener noreferrer">
             <SiGooglescholar /> {t('publications.scholar')} <FiArrowUpRight />
           </a>
         )}
-        <div className="pub-tabs" role="tablist">
-          <button role="tab" aria-selected={tab === 'papers'} className={`pub-tabs__tab ${tab === 'papers' ? 'is-active' : ''}`} onClick={() => setParams({})}>
-            {t('publications.tabPapers')}
-          </button>
-          <button role="tab" aria-selected={tab === 'presentations'} className={`pub-tabs__tab ${tab === 'presentations' ? 'is-active' : ''}`} onClick={() => setParams({ tab: 'presentations' })}>
-            {t('publications.tabPresentations')}
-          </button>
-        </div>
-        {tab === 'papers' ? <Papers /> : <Presentations />}
+        {view === 'papers' ? <Papers /> : <Presentations />}
       </div>
     </div>
   );

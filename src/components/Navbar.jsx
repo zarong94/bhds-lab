@@ -26,11 +26,11 @@ export default function Navbar() {
       { to: '/about', label: t('nav.profile') },
       { to: '/teaching', label: t('nav.teaching') },
     ] },
-    { to: '/research', label: t('nav.research'), children: [
-      { to: '/research#areas', label: t('nav.areas') },
-      { to: '/research#projects', label: t('nav.projects') },
-      { to: '/publications', label: t('nav.papers') },
-      { to: '/publications?tab=presentations', label: t('nav.presentations') },
+    { to: '/research/areas', label: t('nav.research'), children: [
+      { to: '/research/areas', label: t('nav.areas') },
+      { to: '/research/projects', label: t('nav.projects') },
+      { to: '/research/papers', label: t('nav.papers') },
+      { to: '/research/presentations', label: t('nav.presentations') },
     ] },
     { to: '/members', label: t('nav.members') },
     { to: '/news', label: t('nav.news') },
@@ -38,7 +38,7 @@ export default function Navbar() {
   ];
 
   const isGroupActive = (link) =>
-    (link.to === '/' ? location.pathname === '/' : location.pathname.startsWith(link.to)) ||
+    (link.to === '/' ? location.pathname === '/' : location.pathname.startsWith('/' + link.to.split('/')[1])) ||
     (link.children || []).some((c) => location.pathname === c.to.split(/[?#]/)[0]);
 
   return (

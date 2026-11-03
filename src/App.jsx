@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -32,6 +32,12 @@ function ScrollToTop() {
   return null;
 }
 
+// 예전 주소(/publications, ?tab=presentations)로 들어와도 새 페이지로 보냄
+function OldPublications() {
+  const { search } = useLocation();
+  return <Navigate to={/tab=presentations/.test(search) ? '/research/presentations' : '/research/papers'} replace />;
+}
+
 function PageWrapper({ children }) {
   return (
     <motion.div
@@ -53,8 +59,12 @@ function AppRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
         <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
-        <Route path="/research" element={<PageWrapper><Research /></PageWrapper>} />
-        <Route path="/publications" element={<PageWrapper><Publications /></PageWrapper>} />
+        <Route path="/research" element={<Navigate to="/research/areas" replace />} />
+        <Route path="/research/areas" element={<PageWrapper><Research view="areas" /></PageWrapper>} />
+        <Route path="/research/projects" element={<PageWrapper><Research view="projects" /></PageWrapper>} />
+        <Route path="/research/papers" element={<PageWrapper><Publications view="papers" /></PageWrapper>} />
+        <Route path="/research/presentations" element={<PageWrapper><Publications view="presentations" /></PageWrapper>} />
+        <Route path="/publications" element={<OldPublications />} />
         <Route path="/members" element={<PageWrapper><Members /></PageWrapper>} />
         <Route path="/teaching" element={<PageWrapper><Teaching /></PageWrapper>} />
         <Route path="/news" element={<PageWrapper><News /></PageWrapper>} />
