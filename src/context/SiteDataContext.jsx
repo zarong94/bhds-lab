@@ -163,11 +163,15 @@ export function normalize(raw) {
     start: dateKey(s(r['기간']).slice(0, 7)),
   })).sort((a, b) => b.start.localeCompare(a.start));
 
-  // 논문
+  // 논문 — 교신저자인데 'et al.'로 이름이 빠진 경우 끝에 교수님 이름을 붙임
+  const withCorresponding = (authors, role) => {
+    if (role !== '교신저자' || !authors || /\bPark S\b/.test(authors)) return authors;
+    return `${authors.replace(/,?\s*et al\.?\s*$/i, '').replace(/[.\s]+$/, '')}, …, Park S.`;
+  };
   const pubs = rows('논문').map((r, i) => ({
     id: `pub-${i}`,
     year: s(r['연도']),
-    authors: s(r['저자']),
+    authors: withCorresponding(s(r['저자']), s(r['저자역할'])),
     title: s(r['제목']),
     journal: s(r['학술지']),
     citation: s(r['서지정보']),

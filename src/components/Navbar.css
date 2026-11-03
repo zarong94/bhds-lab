@@ -124,6 +124,32 @@
   display: none;
 }
 
+/* ── 하위 메뉴 (마우스 올리면 펼침) ── */
+.navbar__item { position: relative; }
+.navbar__sub {
+  position: absolute; top: 100%; left: 50%;
+  transform: translate(-50%, 6px);
+  padding-top: 8px;
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+  z-index: 1002;
+}
+.navbar__item--has-sub:hover .navbar__sub,
+.navbar__item--has-sub:focus-within .navbar__sub {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0);
+}
+.navbar__sub-panel {
+  display: flex; flex-direction: column; min-width: 180px; padding: 8px;
+  background: #fff; border-radius: 14px;
+  box-shadow: 0 18px 40px -16px rgba(0, 37, 82, 0.28), 0 4px 12px -6px rgba(0, 37, 82, 0.12);
+}
+.navbar__sublink {
+  padding: 10px 14px; font-size: var(--text-sm); font-weight: 500;
+  color: var(--text-secondary); text-decoration: none; border-radius: 10px;
+  white-space: nowrap; transition: all var(--transition-fast);
+}
+.navbar__sublink:hover { color: var(--primary-600); background: var(--primary-50); }
+
 /* ── Mobile ── */
 @media (max-width: 900px) {
   .navbar__mobile-toggle {
@@ -155,6 +181,15 @@
     padding: 12px 16px;
     font-size: var(--text-base);
   }
+
+  .navbar__item { width: 100%; }
+  .navbar__sub,
+  .navbar__item--has-sub:hover .navbar__sub,
+  .navbar__item--has-sub:focus-within .navbar__sub {
+    position: static; transform: none; opacity: 1; visibility: visible; padding: 0 0 4px 16px;
+  }
+  .navbar__sub-panel { padding: 0; min-width: 0; box-shadow: none; background: transparent; }
+  .navbar__sublink { padding: 8px 16px; color: var(--text-tertiary); }
 
   .navbar__lang {
     margin-left: 0;

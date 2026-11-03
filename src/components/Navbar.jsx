@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 import './Navbar.css';
@@ -22,14 +22,22 @@ export default function Navbar() {
 
   const links = [
     { to: '/', label: t('nav.home') },
-    { to: '/about', label: t('nav.about') },
+    { to: '/about', label: t('nav.about'), children: [
+      { to: '/teaching', label: t('nav.teaching') },
+    ] },
+    { to: '/research', label: t('nav.research'), children: [
+      { to: '/research#areas', label: t('nav.areas') },
+      { to: '/research#projects', label: t('nav.projects') },
+      { to: '/publications', label: t('nav.publications') },
+    ] },
     { to: '/members', label: t('nav.members') },
-    { to: '/research', label: t('nav.research') },
-    { to: '/publications', label: t('nav.publications') },
-    { to: '/teaching', label: t('nav.teaching') },
     { to: '/news', label: t('nav.news') },
     { to: '/contact', label: t('nav.contact') },
   ];
+
+  const isGroupActive = (link) =>
+    (link.to === '/' ? location.pathname === '/' : location.pathname.startsWith(link.to)) ||
+    (link.children || []).some((c) => location.pathname === c.to.split('#')[0]);
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${!scrolled && location.pathname === '/' ? 'navbar--on-photo' : ''}`}>
@@ -51,16 +59,24 @@ export default function Navbar() {
 
         <div className={`navbar__links ${mobileOpen ? 'navbar__links--open' : ''}`}>
           {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === '/'}
-              className={({ isActive }) =>
-                `navbar__link ${isActive ? 'navbar__link--active' : ''}`
-              }
-            >
-              {link.label}
-            </NavLink>
+            <div key={link.to} className={`navbar__item ${link.children ? 'navbar__item--has-sub' : ''}`}>
+              <NavLink
+                to={link.to}
+                end={link.to === '/'}
+                className={`navbar__link ${isGroupActive(link) ? 'navbar__link--active' : ''}`}
+              >
+                {link.label}
+              </NavLink>
+              {link.children && (
+                <div className="navbar__sub">
+                  <div className="navbar__sub-panel">
+                    {link.children.map((c) => (
+                      <Link key={c.to} to={c.to} className="navbar__sublink">{c.label}</Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
           <button
             className="navbar__lang"

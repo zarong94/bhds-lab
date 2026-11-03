@@ -7,7 +7,9 @@
     "members": "구성원",
     "teaching": "강의",
     "news": "소식",
-    "contact": "연락처"
+    "contact": "연락처",
+    "areas": "연구 분야",
+    "projects": "연구 과제"
   },
   "hero": {
     "cta": "연구 분야 보기",

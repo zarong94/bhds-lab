@@ -50,7 +50,7 @@ export default function Research() {
       <PageHero title={t('research.title')} />
 
       <div className="container">
-        <h2 className="research__heading">{t('research.areas')}</h2>
+        <h2 id="areas" className="research__heading">{t('research.areas')}</h2>
         <div className="research__grid">
           {areas.map((item, i) => (
             <motion.div key={item.id} className="research__card" custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={cardVariants}>
@@ -70,6 +70,7 @@ export default function Research() {
           ))}
         </div>
 
+        <div id="projects" />
         {ongoing.length > 0 && (
           <section className="research__projects">
             <h2 className="research__heading">{t('research.ongoing')}</h2>

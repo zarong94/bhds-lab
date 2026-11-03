@@ -15,10 +15,20 @@ import { SiteDataProvider } from './context/SiteDataContext';
 import { useEffect } from 'react';
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!hash) { window.scrollTo(0, 0); return; }
+    // 페이지 전환 애니메이션이 끝난 뒤 해당 섹션으로 이동
+    let tries = 0;
+    const timer = setInterval(() => {
+      const el = document.getElementById(hash.slice(1));
+      if (el || ++tries > 20) {
+        clearInterval(timer);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+    return () => clearInterval(timer);
+  }, [pathname, hash]);
   return null;
 }
 

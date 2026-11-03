@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { useSiteData, pick } from '../context/SiteDataContext';
 import { formatDate } from '../components/NewsCard';
@@ -12,9 +13,48 @@ const fadeUp = {
   visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.08 } }),
 };
 
+/** 히어로 오른쪽: 사진 있는 소식을 자동으로 넘겨 보여줌. 누르면 소식 페이지로 */
+function HeroNews({ items, lang, t }) {
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused || items.length < 2) return undefined;
+    const id = setInterval(() => setIdx((i) => (i + 1) % items.length), 5000);
+    return () => clearInterval(id);
+  }, [paused, items.length]);
+  const n = items[idx];
+  return (
+    <div className="hx-slider" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      <Link to="/news" className="hx-slider__link" aria-label={pick(n.title, lang)}>
+        <AnimatePresence initial={false}>
+          <motion.div key={n.id} className="hx-slider__slide"
+            initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}>
+            <Photo src={n.photo} alt="" className="hx-hero__img" />
+            <div className="hx-slider__shade" />
+            <div className="hx-slider__caption">
+              <p className="hx-slider__meta">{t(`news.categories.${n.category}`)} · {formatDate(n.date, lang)}</p>
+              <h3 className="hx-slider__title">{pick(n.title, lang)}</h3>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </Link>
+      {items.length > 1 && (
+        <div className="hx-slider__dots">
+          {items.map((it, i) => (
+            <button key={it.id} type="button" aria-label={`${i + 1}`}
+              className={`hx-slider__dot ${i === idx ? 'is-active' : ''}`} onClick={() => setIdx(i)} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Home() {
   const { t, lang } = useLanguage();
   const { home, areas, news, pubs, projects, members, presentations } = useSiteData();
+  const photoNews = news.filter((n) => n.photo).slice(0, 6);
   const memberCount = ['professor', 'postdoc', 'researcher', 'phd', 'ms', 'undergraduate']
     .reduce((n, k) => n + members[k].length, 0);
 
@@ -42,7 +82,11 @@ export default function Home() {
               <Link to="/members" className="hx-btn hx-btn--ghost">{t('hero.ctaSecondary')}</Link>
             </motion.div>
           </div>
-          {home.heroPhoto && (
+          {photoNews.length > 0 ? (
+            <motion.div className="hx-hero__photo" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
+              <HeroNews items={photoNews} lang={lang} t={t} />
+            </motion.div>
+          ) : home.heroPhoto && (
             <motion.div className="hx-hero__photo" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
               <Photo src={home.heroPhoto} alt={pick(home.labName, lang)} className="hx-hero__img" style={{ objectPosition: `center ${home.heroPos}` }} />
             </motion.div>

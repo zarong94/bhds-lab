@@ -91,3 +91,5 @@
   .project__meta { flex-direction: row; align-items: center; text-align: left; }
   .project-year { grid-template-columns: 1fr; gap: 0; }
 }
+
+#areas, #projects { scroll-margin-top: calc(var(--nav-height) + 16px); }
