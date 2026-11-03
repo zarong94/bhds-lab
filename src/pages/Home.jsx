@@ -80,7 +80,7 @@ function HeroNews({ items, lang, t }) {
 }
 
 /** 로고 주변 여백을 잘라내고, 가로세로 비율이 달라도 눈으로 보기에 비슷한 크기가 되게 맞춤 */
-const LOGO_AREA = 4200; // 로고 하나가 차지하는 넓이(px²) 기준
+const LOGO_AREA = 5200; // 로고 하나가 차지하는 넓이(px²) 기준
 function useTrimmedLogo(src) {
   const [out, setOut] = useState({ url: src, ratio: 3 });
   useEffect(() => {
