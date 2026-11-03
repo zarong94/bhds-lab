@@ -56,7 +56,7 @@ function MemberCard({ member, lang }) {
 
 export default function Members() {
   const { t, lang } = useLanguage();
-  const { members } = useSiteData();
+  const { members, home } = useSiteData();
   // 교수님은 '교수 소개' 페이지에 따로 있으므로 구성원 목록에서는 뺌
   const categories = ['postdoc', 'researcher', 'phd', 'ms', 'undergraduate'];
   // 졸업생은 대학원별로 묶음 (시트 '구성원' 탭의 '대학원' 칸)
@@ -69,6 +69,11 @@ export default function Members() {
     <div className="members">
       <PageHero title={t('members.title')} />
       <div className="container">
+        {home.membersPhoto && (
+          <div className="members__group-photo">
+            <Photo src={home.membersPhoto} alt={t('members.title')} style={{ objectPosition: `center ${home.membersPos}` }} />
+          </div>
+        )}
         {categories.map((cat) => {
           const list = members[cat];
           if (!list || list.length === 0) return null;
