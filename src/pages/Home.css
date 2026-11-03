@@ -329,3 +329,10 @@
 .hx-arc { overflow: hidden; padding: 30px 0 50px; }
 .hx-arc__track { display: flex; align-items: center; gap: 28px; width: max-content; will-change: transform; }
 .hx-arc .hx-org { flex-shrink: 0; transform-origin: center center; will-change: transform, opacity; }
+
+/* 모집 안내: 흰 상자 없이 가볍게 (왼쪽 얇은 선만) */
+.hx-contact__recruit { background: none; box-shadow: none; border-radius: 0; padding: 4px 0 4px var(--space-xl); border-left: 1px solid var(--gray-200, #E2E8F0); margin-top: 72px; }
+.hx-contact__recruit-title { font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); }
+.hx-contact__roles li { background: none; border: 1px solid var(--primary-100, #D4EAFC); }
+.hx-contact__actions .hx-btn { padding: 10px 22px; font-size: var(--text-sm); }
+@media (max-width: 768px) { .hx-contact__recruit { margin-top: 0; border-left: 0; padding-left: 0; border-top: 1px solid var(--gray-200, #E2E8F0); padding-top: var(--space-xl); } }
