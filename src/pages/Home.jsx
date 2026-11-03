@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { useSiteData, pick } from '../context/SiteDataContext';
@@ -13,19 +13,43 @@ const fadeUp = {
   visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.08 } }),
 };
 
-/** 히어로 오른쪽: 사진 있는 소식을 자동으로 넘겨 보여줌. 누르면 소식 페이지로 */
+/** 히어로 오른쪽: 사진 있는 소식을 자동으로 넘겨 보여줌. 누르면 소식 페이지로.
+ *  좌우로 밀거나(터치·마우스 끌기) 트랙패드로 옆으로 스크롤하면 넘어가고, 아래 긴 막대를 눌러 고를 수 있음 */
+const SLIDE_MS = 5000;
 function HeroNews({ items, lang, t }) {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    if (paused || items.length < 2) return undefined;
-    const id = setInterval(() => setIdx((i) => (i + 1) % items.length), 5000);
-    return () => clearInterval(id);
-  }, [paused, items.length]);
+  const drag = useRef({ x: 0, moved: false, down: false });
+  const wheel = useRef({ sum: 0, lock: 0 });
+  const count = items.length;
+  const go = (d) => setIdx((i) => (i + d + count) % count);
+
+  // 다음으로 넘어가는 시점은 아래 막대가 다 차는 순간(마우스를 올리면 함께 멈춤)
+
+  const onPointerDown = (e) => { drag.current = { x: e.clientX, moved: false, down: true }; };
+  const onPointerUp = (e) => {
+    if (!drag.current.down) return;
+    const dx = e.clientX - drag.current.x;
+    drag.current.down = false;
+    if (Math.abs(dx) > 40 && count > 1) { drag.current.moved = true; go(dx < 0 ? 1 : -1); }
+  };
+  const onClick = (e) => { if (drag.current.moved) { e.preventDefault(); drag.current.moved = false; } };
+  const onWheel = (e) => {
+    if (count < 2 || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+    const now = Date.now();
+    if (now < wheel.current.lock) return;
+    wheel.current.sum += e.deltaX;
+    if (Math.abs(wheel.current.sum) > 40) {
+      go(wheel.current.sum > 0 ? 1 : -1);
+      wheel.current = { sum: 0, lock: now + 700 };
+    }
+  };
+
   const n = items[idx];
   return (
-    <div className="hx-slider" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <Link to="/news" className="hx-slider__link" aria-label={pick(n.title, lang)}>
+    <div className="hx-slider" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onWheel={onWheel}>
+      <Link to="/news" className="hx-slider__link" aria-label={pick(n.title, lang)} draggable={false}
+        onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => { drag.current.down = false; }} onClick={onClick}>
         <AnimatePresence initial={false}>
           <motion.div key={n.id} className="hx-slider__slide"
             initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
@@ -39,11 +63,15 @@ function HeroNews({ items, lang, t }) {
           </motion.div>
         </AnimatePresence>
       </Link>
-      {items.length > 1 && (
-        <div className="hx-slider__dots">
+      {count > 1 && (
+        <div className="hx-slider__bar">
           {items.map((it, i) => (
-            <button key={it.id} type="button" aria-label={`${i + 1}`}
-              className={`hx-slider__dot ${i === idx ? 'is-active' : ''}`} onClick={() => setIdx(i)} />
+            <button key={it.id} type="button" aria-label={pick(it.title, lang)}
+              className={`hx-slider__seg ${i === idx ? 'is-active' : ''} ${i < idx ? 'is-done' : ''}`} onClick={() => setIdx(i)}>
+              <span className="hx-slider__track">
+                {i === idx && <span key={idx} className="hx-slider__fill" style={{ animationDuration: `${SLIDE_MS}ms`, animationPlayState: paused ? 'paused' : 'running' }} onAnimationEnd={() => go(1)} />}
+              </span>
+            </button>
           ))}
         </div>
       )}
