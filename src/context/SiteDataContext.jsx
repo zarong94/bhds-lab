@@ -203,7 +203,8 @@ export function normalize(raw) {
   const logo = (name) => {
     // '국립암센터.png'처럼 기관 이름으로 시작하는 이미지 파일 (예: '한국과학기술연구원(KIST).jpg'도 인식)
     const f = Object.keys(photos).find((fn) => fn.startsWith(name) && /\.(png|jpe?g|svg|webp)$/i.test(fn));
-    return f ? photo(f, 400) : null;
+    // 크기를 줄이면 투명 배경이 검게 바뀌어서 원본 그대로 사용
+    return f && photos[f] ? `https://lh3.googleusercontent.com/d/${photos[f]}` : null;
   };
   const partners = Object.entries(orgCount).sort((a, b) => b[1] - a[1])
     .map(([ko]) => ({ ko, en: ORG_EN[ko] || ko, logo: logo(ko) }));

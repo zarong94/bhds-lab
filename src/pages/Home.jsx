@@ -165,9 +165,10 @@ export default function Home() {
             <div key={r} className="hx-marquee">
               <div className={`hx-marquee__track ${r ? 'hx-marquee__track--rev' : ''}`}>
                 {[...row, ...row].map((o, i) => (
-                  <span key={`${o.ko}-${i}`} className="hx-org" aria-hidden={i >= row.length}>
-                    <span className="hx-org__logo">{o.logo && <img src={o.logo} alt="" referrerPolicy="no-referrer" />}</span>
-                    <span className="hx-org__name">{pick(o, lang)}</span>
+                  <span key={`${o.ko}-${i}`} className={`hx-org ${o.logo ? 'hx-org--logo' : ''}`} aria-hidden={i >= row.length} title={pick(o, lang)}>
+                    {o.logo
+                      ? <img className="hx-org__img" src={o.logo} alt={pick(o, lang)} referrerPolicy="no-referrer" loading="lazy" />
+                      : <span className="hx-org__name">{pick(o, lang)}</span>}
                   </span>
                 ))}
               </div>
