@@ -23,6 +23,7 @@ export default function Navbar() {
   const links = [
     { to: '/', label: t('nav.home') },
     { to: '/about', label: t('nav.about'), children: [
+      { to: '/about', label: t('nav.profile') },
       { to: '/teaching', label: t('nav.teaching') },
     ] },
     { to: '/research', label: t('nav.research'), children: [
