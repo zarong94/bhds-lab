@@ -200,7 +200,8 @@ export function normalize(raw) {
     });
   });
   const logo = (name) => {
-    const f = ['png', 'jpg', 'jpeg', 'svg', 'webp'].map((ext) => `${name}.${ext}`).find((fn) => photos[fn]);
+    // '국립암센터.png'처럼 기관 이름으로 시작하는 이미지 파일 (예: '한국과학기술연구원(KIST).jpg'도 인식)
+    const f = Object.keys(photos).find((fn) => fn.startsWith(name) && /\.(png|jpe?g|svg|webp)$/i.test(fn));
     return f ? photo(f, 400) : null;
   };
   const partners = Object.entries(orgCount).sort((a, b) => b[1] - a[1])
