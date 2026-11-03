@@ -122,6 +122,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 1-2. 연구실 소개 */}
+      <section className="hx-intro container">
+        <motion.div className="hx-intro__head" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+          {t('home.eyebrowAbout') && <p className="hx-eyebrow">{t('home.eyebrowAbout')}</p>}
+          <h2 className="hx-intro__title">
+            {pick(home.labName, lang)}
+          </h2>
+        </motion.div>
+        <motion.div className="hx-intro__body" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
+          <p className="hx-intro__text">{pick(home.intro, lang)}</p>
+          <dl className="hx-intro__facts">
+            <div><dt>{t('home.pi')}</dt><dd>{pick(home.pi, lang)}</dd></div>
+            <div><dt>{t('home.affiliation')}</dt><dd>{pick(home.affiliation, lang)}</dd></div>
+          </dl>
+          <Link to="/about" className="hx-more">{t('nav.about')} <FiArrowRight /></Link>
+        </motion.div>
+      </section>
+
       {/* 2. 연구 분야 */}
       <section className="hx-research">
         <div className="container">
