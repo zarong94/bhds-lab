@@ -204,7 +204,10 @@ export function normalize(raw) {
     // '국립암센터.png'처럼 기관 이름으로 시작하는 이미지 파일 (예: '한국과학기술연구원(KIST).jpg'도 인식)
     const f = Object.keys(photos).find((fn) => fn.startsWith(name) && /\.(png|jpe?g|svg|webp)$/i.test(fn));
     // 크기를 줄이면 투명 배경이 검게 바뀌어서 원본 그대로 사용
-    return f && photos[f] ? `https://lh3.googleusercontent.com/d/${photos[f]}` : null;
+    if (!f || !photos[f]) return null;
+    // SVG는 드라이브 미리보기 이미지로 (파일을 고치면 바로 반영됨)
+    if (/\.svg$/i.test(f)) return `https://drive.google.com/thumbnail?id=${photos[f]}&sz=w800`;
+    return `https://lh3.googleusercontent.com/d/${photos[f]}`;
   };
   const partners = Object.entries(orgCount).sort((a, b) => b[1] - a[1])
     .map(([ko]) => ({ ko, en: ORG_EN[ko] || ko, logo: logo(ko) }));
