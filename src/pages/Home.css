@@ -321,8 +321,8 @@
 
 /* 로고가 있으면 로고만 (로고에 기관 이름이 들어 있음) */
 .hx-org { min-height: 76px; box-sizing: border-box; }
-.hx-org--logo { padding: 14px 30px; }
-.hx-org__img { display: block; height: 46px; width: auto; max-width: 220px; object-fit: contain; }
+.hx-org--logo { padding: 14px 30px; min-width: 230px; height: 92px; justify-content: center; }
+.hx-org__img { display: block; object-fit: contain; }
 .hx-org:not(.hx-org--logo) { padding: 12px 26px; }
 
 /* 한 줄 아치형 흐름 */

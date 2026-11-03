@@ -79,6 +79,55 @@ function HeroNews({ items, lang, t }) {
   );
 }
 
+/** 로고 주변 여백을 잘라내고, 가로세로 비율이 달라도 눈으로 보기에 비슷한 크기가 되게 맞춤 */
+const LOGO_AREA = 4200; // 로고 하나가 차지하는 넓이(px²) 기준
+function useTrimmedLogo(src) {
+  const [out, setOut] = useState({ url: src, ratio: 3 });
+  useEffect(() => {
+    if (!src) return undefined;
+    let alive = true;
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.referrerPolicy = 'no-referrer';
+    img.onload = () => {
+      try {
+        const w = img.naturalWidth; const h = img.naturalHeight;
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        const x = c.getContext('2d'); x.drawImage(img, 0, 0);
+        const d = x.getImageData(0, 0, w, h).data;
+        let t = h; let l = w; let b = -1; let r = -1;
+        for (let yy = 0; yy < h; yy += 1) {
+          for (let xx = 0; xx < w; xx += 1) {
+            const i = (yy * w + xx) * 4;
+            const blank = d[i + 3] < 20 || (d[i] > 242 && d[i + 1] > 242 && d[i + 2] > 242);
+            if (!blank) { if (yy < t) t = yy; if (yy > b) b = yy; if (xx < l) l = xx; if (xx > r) r = xx; }
+          }
+        }
+        if (r < l || b < t) { if (alive) setOut({ url: src, ratio: w / h }); return; }
+        const cw = r - l + 1; const ch = b - t + 1;
+        const o = document.createElement('canvas'); o.width = cw; o.height = ch;
+        o.getContext('2d').drawImage(c, l, t, cw, ch, 0, 0, cw, ch);
+        if (alive) setOut({ url: o.toDataURL('image/png'), ratio: cw / ch });
+      } catch (e) {
+        if (alive) setOut({ url: src, ratio: img.naturalWidth / img.naturalHeight || 3 });
+      }
+    };
+    img.onerror = () => {};
+    img.src = src;
+    return () => { alive = false; };
+  }, [src]);
+  return out;
+}
+
+function OrgLogo({ src, alt }) {
+  const { url, ratio } = useTrimmedLogo(src);
+  let h = Math.sqrt(LOGO_AREA / ratio);
+  let w = h * ratio;
+  if (h > 58) { h = 58; w = h * ratio; }
+  if (w > 200) { w = 200; h = w / ratio; }
+  return <img className="hx-org__img" src={url} alt={alt} style={{ width: `${w}px`, height: `${h}px` }} referrerPolicy="no-referrer" />;
+}
+
 /** 함께한 기관: 한 줄로 흐르며 가운데에서 크고 선명하게, 양옆으로 갈수록 작고 흐리게 (-x² 곡선처럼 살짝 휘어짐) */
 function PartnerArc({ orgs, lang }) {
   const box = useRef(null);
@@ -121,7 +170,7 @@ function PartnerArc({ orgs, lang }) {
           <span key={`${o.ko}-${i}`} ref={(el) => { items.current[i] = el; }}
             className={`hx-org ${o.logo ? 'hx-org--logo' : ''}`} aria-hidden={i >= orgs.length} title={pick(o, lang)}>
             {o.logo
-              ? <img className="hx-org__img" src={o.logo} alt={pick(o, lang)} referrerPolicy="no-referrer" />
+              ? <OrgLogo src={o.logo} alt={pick(o, lang)} />
               : <span className="hx-org__name">{pick(o, lang)}</span>}
           </span>
         ))}

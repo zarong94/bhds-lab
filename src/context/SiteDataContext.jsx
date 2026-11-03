@@ -205,8 +205,8 @@ export function normalize(raw) {
     const f = Object.keys(photos).find((fn) => fn.startsWith(name) && /\.(png|jpe?g|svg|webp)$/i.test(fn));
     // 크기를 줄이면 투명 배경이 검게 바뀌어서 원본 그대로 사용
     if (!f || !photos[f]) return null;
-    // SVG는 드라이브 미리보기 이미지로 (파일을 고치면 바로 반영됨)
-    if (/\.svg$/i.test(f)) return `https://drive.google.com/thumbnail?id=${photos[f]}&sz=w800`;
+    // SVG는 그림으로 바꿔서 불러옴
+    if (/\.svg$/i.test(f)) return `https://lh3.googleusercontent.com/d/${photos[f]}=w1000`;
     return `https://lh3.googleusercontent.com/d/${photos[f]}`;
   };
   const partners = Object.entries(orgCount).sort((a, b) => b[1] - a[1])
