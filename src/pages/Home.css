@@ -288,3 +288,33 @@
   .hx-hero__inner { grid-template-columns: 1fr; gap: var(--space-xl); text-align: center; }
   .hx-hero__actions { justify-content: center; }
 }
+
+/* 3. 함께한 기관 — 흐르는 띠 */
+.hx-partners { padding: var(--space-3xl) 0; background: linear-gradient(180deg, var(--primary-50), #F5F9FD); overflow: hidden; }
+.hx-partners .hx-section-title { margin-bottom: var(--space-xl); }
+.hx-marquee { overflow: hidden; padding: 6px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.hx-marquee + .hx-marquee { margin-top: 14px; }
+.hx-marquee__track { display: flex; gap: 16px; width: max-content; animation: hx-marquee 45s linear infinite; }
+.hx-marquee__track--rev { animation-direction: reverse; animation-duration: 52s; }
+.hx-marquee:hover .hx-marquee__track { animation-play-state: paused; }
+@keyframes hx-marquee { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 8px)); } }
+.hx-org { display: inline-flex; align-items: center; gap: 14px; padding: 12px 24px 12px 12px; border-radius: 18px; background: #fff; box-shadow: 0 14px 30px -20px rgba(0, 37, 82, 0.35); white-space: nowrap; }
+.hx-org__logo { width: 44px; height: 44px; border-radius: 12px; background: var(--primary-50); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.hx-org__logo img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
+.hx-org__name { font-size: var(--text-base); font-weight: 500; color: var(--primary-800, #003876); }
+@media (prefers-reduced-motion: reduce) { .hx-marquee__track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } }
+
+/* 4. 연락처 */
+.hx-contact { padding: var(--space-3xl) 0; }
+.hx-contact__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-2xl); align-items: start; }
+.hx-contact__list { display: grid; gap: var(--space-lg); margin-top: var(--space-lg); }
+.hx-contact__list dt { display: flex; align-items: center; gap: 8px; font-size: var(--text-sm); font-weight: 700; color: var(--primary-700); margin-bottom: 4px; }
+.hx-contact__list dd { margin: 0; color: var(--text-secondary); line-height: 1.7; }
+.hx-contact__recruit { background: #fff; border-radius: 22px; padding: var(--space-xl); box-shadow: 0 24px 44px -28px rgba(0, 37, 82, 0.35), 0 6px 14px -8px rgba(0, 37, 82, 0.1); }
+.hx-contact__recruit-title { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-md); }
+.hx-contact__roles { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 var(--space-lg); }
+.hx-contact__roles li { padding: 6px 14px; border-radius: 999px; background: var(--primary-50); color: var(--primary-700); font-size: var(--text-sm); font-weight: 500; }
+.hx-contact__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.hx-btn--line { border: 1px solid var(--primary-200); color: var(--primary-700); background: #fff; }
+.hx-btn--line:hover { background: var(--primary-50); color: var(--primary-700); }
+@media (max-width: 768px) { .hx-contact__inner { grid-template-columns: 1fr; } }

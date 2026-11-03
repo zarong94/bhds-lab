@@ -58,7 +58,20 @@ const posValue = (v, fallback) => {
   return fallback;
 };
 // 시트에 '사진 크기'가 비어 있을 때 쓰는 기본값(%): 얼굴 크기를 황인성·전자영 사진에 맞춤
-const PHOTO_ZOOM = { '최민석': 80, '김지수': 128 };
+const PHOTO_ZOOM = { '김지수': 128 };
+// 함께한 기관: 연구과제 '지원기관' 칸에서 기관 이름만 뽑음
+const ORG_EN = {
+  '보건복지부': 'Ministry of Health and Welfare',
+  '과학기술정보통신부': 'Ministry of Science and ICT',
+  '국립암센터': 'National Cancer Center',
+  '질병관리청': 'Korea Disease Control and Prevention Agency',
+  '한국연구재단': 'National Research Foundation of Korea',
+  '한국국제보건의료재단': 'Korea Foundation for International Healthcare',
+  '한국보건산업진흥원': 'Korea Health Industry Development Institute',
+  '한국산업안전보건공단': 'Korea Occupational Safety and Health Agency',
+  '한국과학기술연구원': 'Korea Institute of Science and Technology',
+};
+const ORG_RE = /^(\S+?(?:부|청|센터|재단|연구원|진흥원|공단))(?:\s|$)/;
 const dateKey = (v) => s(v).replace(/[./]/g, '-');
 
 const MEMBER_GROUPS = {
@@ -177,6 +190,22 @@ export function normalize(raw) {
     start: dateKey(s(r['기간']).slice(0, 7)),
   })).sort((a, b) => b.start.localeCompare(a.start));
 
+  // 함께한 기관 (과제 수 많은 순)
+  const orgCount = {};
+  rows('연구과제').forEach((r) => {
+    const seen = new Set();
+    s(r['지원기관']).split('·').forEach((part) => {
+      const m = part.trim().match(ORG_RE);
+      if (m && !seen.has(m[1])) { seen.add(m[1]); orgCount[m[1]] = (orgCount[m[1]] || 0) + 1; }
+    });
+  });
+  const logo = (name) => {
+    const f = ['png', 'jpg', 'jpeg', 'svg', 'webp'].map((ext) => `${name}.${ext}`).find((fn) => photos[fn]);
+    return f ? photo(f, 400) : null;
+  };
+  const partners = Object.entries(orgCount).sort((a, b) => b[1] - a[1])
+    .map(([ko]) => ({ ko, en: ORG_EN[ko] || ko, logo: logo(ko) }));
+
   // 논문 — 교신저자인데 'et al.'로 이름이 빠진 경우 끝에 교수님 이름을 붙임
   const withCorresponding = (authors, role) => {
     if (role !== '교신저자' || !authors || /\bPark S\b/.test(authors)) return authors;
@@ -236,7 +265,7 @@ export function normalize(raw) {
   home.heroPos = pos(H('대표 사진 위치').ko, '75%');
   home.bandPos = pos(H('띠 사진 위치').ko, '45%');
 
-  return { home, prof, members, areas, projects, pubs, presentations, news, teaching, updated: raw.updated };
+  return { home, prof, members, areas, projects, pubs, presentations, news, teaching, partners, updated: raw.updated };
 }
 
 export function SiteDataProvider({ children }) {
