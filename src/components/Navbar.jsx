@@ -28,7 +28,8 @@ export default function Navbar() {
     { to: '/research', label: t('nav.research'), children: [
       { to: '/research#areas', label: t('nav.areas') },
       { to: '/research#projects', label: t('nav.projects') },
-      { to: '/publications', label: t('nav.publications') },
+      { to: '/publications', label: t('nav.papers') },
+      { to: '/publications?tab=presentations', label: t('nav.presentations') },
     ] },
     { to: '/members', label: t('nav.members') },
     { to: '/news', label: t('nav.news') },
@@ -37,7 +38,7 @@ export default function Navbar() {
 
   const isGroupActive = (link) =>
     (link.to === '/' ? location.pathname === '/' : location.pathname.startsWith(link.to)) ||
-    (link.children || []).some((c) => location.pathname === c.to.split('#')[0]);
+    (link.children || []).some((c) => location.pathname === c.to.split(/[?#]/)[0]);
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${!scrolled && location.pathname === '/' ? 'navbar--on-photo' : ''}`}>
