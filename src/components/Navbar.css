@@ -135,7 +135,7 @@
   z-index: 1002;
 }
 .navbar__item--has-sub:hover .navbar__sub,
-.navbar__item--has-sub:focus-within .navbar__sub {
+.navbar__item--has-sub:has(:focus-visible) .navbar__sub {
   opacity: 1; visibility: visible; transform: translate(-50%, 0);
 }
 .navbar__sub-panel {

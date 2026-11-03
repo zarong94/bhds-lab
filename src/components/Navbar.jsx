@@ -18,6 +18,8 @@ export default function Navbar() {
 
   useEffect(() => {
     setMobileOpen(false);
+    // 메뉴를 누른 뒤 포커스가 남아 하위 메뉴가 계속 떠 있지 않게
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
   }, [location]);
 
   const links = [
