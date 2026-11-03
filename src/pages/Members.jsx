@@ -27,7 +27,12 @@ function MemberCard({ member, lang }) {
             src={member.photo}
             alt={pick(member.name, lang)}
             className="member-card__img"
-            style={{ transform: `scale(${member.photoZoom})`, objectPosition: `center ${member.photoPos}` }}
+            style={{
+              transform: `scale(${member.photoZoom})`,
+              // 축소할 때는 아래쪽에 붙여서 옷 아래가 비지 않게
+              transformOrigin: member.photoZoom < 1 ? 'center bottom' : 'center 35%',
+              objectPosition: `center ${member.photoPos}`,
+            }}
             fallback={<div className="member-card__avatar"><span>{initials}</span></div>}
           />
         </div>
