@@ -90,8 +90,9 @@ const NEWS_CATEGORIES = { '수상': 'award', '논문': 'publication', '행사': 
 
 export function normalize(raw) {
   const sh = raw.sheets || {};
-  const photos = raw.photos || {};
-  const photo = (name, w) => photoUrl(photos[s(name)], w);
+  // 맥에서 올린 한글 파일명은 글자가 풀어진 형태(NFD)라 같은 모양으로 맞춤
+  const photos = Object.fromEntries(Object.entries(raw.photos || {}).map(([k, v]) => [k.normalize('NFC'), v]));
+  const photo = (name, w) => photoUrl(photos[s(name).normalize('NFC')], w);
   const rows = (name) => (Array.isArray(sh[name]) ? sh[name] : []);
 
   // 홈
