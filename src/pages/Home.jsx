@@ -79,6 +79,57 @@ function HeroNews({ items, lang, t }) {
   );
 }
 
+/** 함께한 기관: 한 줄로 흐르며 가운데에서 크고 선명하게, 양옆으로 갈수록 작고 흐리게 (-x² 곡선처럼 살짝 휘어짐) */
+function PartnerArc({ orgs, lang }) {
+  const box = useRef(null);
+  const track = useRef(null);
+  const items = useRef([]);
+  const hover = useRef(false);
+  const reps = 3;
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let x = 0; let last = performance.now(); let raf;
+    const tick = (now) => {
+      const dt = Math.min(now - last, 50); last = now;
+      const el = track.current; const b = box.current;
+      if (el && b) {
+        const setW = el.scrollWidth / reps;
+        if (!hover.current && !reduce) x = (x + dt * 0.045) % setW;
+        el.style.transform = `translateX(${-x - setW}px)`;
+        const half = b.clientWidth / 2;
+        const mid = b.getBoundingClientRect().left + half;
+        items.current.forEach((it) => {
+          if (!it) return;
+          const r = it.getBoundingClientRect();
+          const d = Math.max(-1.2, Math.min(1.2, (r.left + r.width / 2 - mid) / half));
+          const k = Math.max(0, 1 - d * d); // -x² 모양
+          it.style.transform = `translateY(${(1 - k) * 34}px) scale(${0.62 + 0.5 * k})`;
+          it.style.opacity = String(0.12 + 0.88 * k);
+        });
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [orgs.length]);
+
+  const all = Array.from({ length: reps }, () => orgs).flat();
+  return (
+    <div className="hx-arc" ref={box} onMouseEnter={() => { hover.current = true; }} onMouseLeave={() => { hover.current = false; }}>
+      <div className="hx-arc__track" ref={track}>
+        {all.map((o, i) => (
+          <span key={`${o.ko}-${i}`} ref={(el) => { items.current[i] = el; }}
+            className={`hx-org ${o.logo ? 'hx-org--logo' : ''}`} aria-hidden={i >= orgs.length} title={pick(o, lang)}>
+            {o.logo
+              ? <img className="hx-org__img" src={o.logo} alt={pick(o, lang)} referrerPolicy="no-referrer" />
+              : <span className="hx-org__name">{pick(o, lang)}</span>}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const { t, lang } = useLanguage();
   const { home, areas, news, partners } = useSiteData();
@@ -161,19 +212,7 @@ export default function Home() {
       {orgs.length > 0 && (
         <section className="hx-partners">
           <h2 className="hx-section-title hx-center">{t('home.partnersTitle')}</h2>
-          {[orgs, [...orgs.slice(Math.ceil(orgs.length / 2)), ...orgs.slice(0, Math.ceil(orgs.length / 2))]].map((row, r) => (
-            <div key={r} className="hx-marquee">
-              <div className={`hx-marquee__track ${r ? 'hx-marquee__track--rev' : ''}`}>
-                {[...row, ...row].map((o, i) => (
-                  <span key={`${o.ko}-${i}`} className={`hx-org ${o.logo ? 'hx-org--logo' : ''}`} aria-hidden={i >= row.length} title={pick(o, lang)}>
-                    {o.logo
-                      ? <img className="hx-org__img" src={o.logo} alt={pick(o, lang)} referrerPolicy="no-referrer" loading="lazy" />
-                      : <span className="hx-org__name">{pick(o, lang)}</span>}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+          <PartnerArc orgs={orgs} lang={lang} />
         </section>
       )}
 
