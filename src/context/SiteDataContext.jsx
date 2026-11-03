@@ -270,9 +270,9 @@ export function normalize(raw) {
   const pos = posValue;
   home.heroPos = pos(H('대표 사진 위치').ko, '75%');
   home.bandPos = pos(H('띠 사진 위치').ko, '45%');
-  // 구성원 페이지 맨 위 단체 사진: 홈 탭 '구성원 사진'(없으면 띠 사진 = 경주 학회 사진)
-  home.membersPhoto = photo(H('구성원 사진').ko, 2000) || home.bandPhoto;
-  home.membersPos = pos(H('구성원 사진 위치').ko, home.bandPos);
+  // 구성원 페이지 맨 위 단체 사진: 홈 탭 '구성원 사진'(없으면 경주에서 교수님과 찍은 IMG_0940)
+  home.membersPhoto = photo(H('구성원 사진').ko, 2000) || photo('IMG_0940.jpeg', 2000) || home.heroPhoto;
+  home.membersPos = pos(H('구성원 사진 위치').ko, '40%');
 
   return { home, prof, members, areas, projects, pubs, presentations, news, teaching, partners, updated: raw.updated };
 }
