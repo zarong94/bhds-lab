@@ -48,6 +48,17 @@ const num = (v, fallback = 9999) => {
   return Number.isFinite(n) ? n : fallback;
 };
 const bi = (ko, en) => ({ ko: s(ko), en: s(en) || s(ko) });
+// 사진의 어느 부분을 보여줄지: 위 / 가운데 / 아래 (또는 0~100%)
+const posValue = (v, fallback) => {
+  const x = s(v);
+  if (/^위|top/i.test(x)) return '15%';
+  if (/^가운데|center/i.test(x)) return '50%';
+  if (/^아래|bottom/i.test(x)) return '85%';
+  if (/^\d{1,3}%?$/.test(x)) return x.replace('%', '') + '%';
+  return fallback;
+};
+// 시트에 '사진 크기'가 비어 있을 때 쓰는 기본값(%): 얼굴 크기를 황인성·전자영 사진에 맞춤
+const PHOTO_ZOOM = { '최민석': 80, '김지수': 128 };
 const dateKey = (v) => s(v).replace(/[./]/g, '-');
 
 const MEMBER_GROUPS = {
@@ -132,6 +143,9 @@ export function normalize(raw) {
       interests: { ko: list(r['관심분야']), en: list(r['관심분야(영문)']).length ? list(r['관심분야(영문)']) : list(r['관심분야']) },
       current: bi(r['현재소속(졸업생)'], r['현재소속(영문)']),
       photo: photo(r['사진파일명'], 600),
+      // 얼굴 크기 맞추기: 시트 '사진 크기'(%, 기본 100) — 비어 있으면 아래 기본값
+      photoZoom: num(r['사진 크기'], PHOTO_ZOOM[s(r['이름'])] || 100) / 100,
+      photoPos: posValue(r['사진 위치'], '30%'),
       scholar: s(r['구글스칼라']),
       website: s(r['홈페이지']),
       school: s(r['대학원']),
@@ -218,14 +232,7 @@ export function normalize(raw) {
   home.heroPhoto = photo(H('대표 사진').ko, 2000) || newsPhotos[0] || null;
   home.bandPhoto = photo(H('띠 사진').ko, 2000) || newsPhotos.find((p) => p !== home.heroPhoto) || null;
   // 사진의 어느 부분을 보여줄지: 위 / 가운데 / 아래 (또는 0~100%)
-  const pos = (v, fallback) => {
-    const x = s(v);
-    if (/^위|top/i.test(x)) return '15%';
-    if (/^가운데|center/i.test(x)) return '50%';
-    if (/^아래|bottom/i.test(x)) return '85%';
-    if (/^\d{1,3}%?$/.test(x)) return x.replace('%', '') + '%';
-    return fallback;
-  };
+  const pos = posValue;
   home.heroPos = pos(H('대표 사진 위치').ko, '75%');
   home.bandPos = pos(H('띠 사진 위치').ko, '45%');
 

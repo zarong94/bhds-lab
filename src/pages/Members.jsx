@@ -22,12 +22,15 @@ function MemberCard({ member, lang }) {
   return (
     <div className="member-card card">
       <div className="member-card__photo-wrap">
-        <Photo
-          src={member.photo}
-          alt={pick(member.name, lang)}
-          className="member-card__photo"
-          fallback={<div className="member-card__avatar"><span>{initials}</span></div>}
-        />
+        <div className="member-card__frame">
+          <Photo
+            src={member.photo}
+            alt={pick(member.name, lang)}
+            className="member-card__img"
+            style={{ transform: `scale(${member.photoZoom})`, objectPosition: `center ${member.photoPos}` }}
+            fallback={<div className="member-card__avatar"><span>{initials}</span></div>}
+          />
+        </div>
       </div>
       <h3 className="member-card__name">{pick(member.name, lang)}</h3>
       <p className="member-card__role">{pick(member.role, lang)}</p>
